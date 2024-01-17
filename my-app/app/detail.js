@@ -22,7 +22,7 @@ export default function Detail({artwork, onClose}) {
           </div>
               <img
                   className="images"
-                  src={`/${artwork.filename}`}
+                  src={`/${artwork.id}.jpg`}
                   alt="1"
                       />
               <div className='close' onClick={goBack}  style={{display:"flex",height:"100vh", width:"-webkit-fill-available", justifyContent:"center",alignItems:'center',padding:"0.5rem"}}> Close </div>

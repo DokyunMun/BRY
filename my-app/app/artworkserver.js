@@ -3,7 +3,6 @@ import DataFetcher from "./datafetcher";
 import Artworks from "./artworks";
 
 export default async function ArtworksServer() {
-    const artworks = await DataFetcher();
-    return <Artworks artworks={artworks} />;
-    
+  const artworks = await DataFetcher();
+  return <Artworks artworks={artworks} />;
 }

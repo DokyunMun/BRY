@@ -1,62 +1,61 @@
-'use client'
-import { useEffect } from 'react';
+"use client";
+import { useEffect } from "react";
 
 let currentSlide = 0;
+let addSlide = 0;
 
-
-export default function Right(){
-
+export default function Right() {
   const scrollArtworks_right = () => {
-    const artworks = document.getElementById('artworks');
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    currentSlide += 4;
-    artworks.style.overflowX="scroll"
-    if (currentSlide < slides.length){
-      const targetSlide = slides[currentSlide];
-      const targetPosition = targetSlide.getBoundingClientRect().left + artworks.scrollLeft ;
-      artworks.scrollLeft = targetPosition;
-    } else {currentSlide = slides.length}; 
-    console.log(currentSlide);
-    artworks.style.overflowX="hidden"
+    const artworks = document.getElementById("artworks");
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    currentSlide += 1;
+
+    if (currentSlide < slides.length - 4) {
+      artworks.style.left = `${currentSlide * -25}rem`;
+    } else {
+      const firstSlide = slides[addSlide].cloneNode(true);
+      addSlide += 1;
+      artworks.appendChild(firstSlide);
+      artworks.style.left = `${currentSlide * -25}rem`;
+    }
   };
 
   const scrollArtworks_left = () => {
-    const artworks = document.getElementById('artworks');
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    artworks.style.overflowX="scroll"
+    const artworks = document.getElementById("artworks");
+    const slides = Array.from(document.querySelectorAll(".slide"));
 
-    if (currentSlide > 4){
-      currentSlide -= 4;
-      const targetSlide = slides[currentSlide];
-      const targetPosition = targetSlide.getBoundingClientRect().left + artworks.scrollLeft ;
-      artworks.scrollLeft = targetPosition;
-      console.log(currentSlide);
+    if (currentSlide > 1) {
+      currentSlide -= 1;
+      const style = getComputedStyle(artworks);
+      const currentLeft = parseFloat(style.left);
+      console.log(currentLeft);
+      artworks.style.left = `${currentLeft + 25 * 16}px`;
     } else {
       currentSlide = 0;
-      const targetSlide = slides[currentSlide];
-      const targetPosition = targetSlide.getBoundingClientRect().left + artworks.scrollLeft ;
-      artworks.scrollLeft = targetPosition;
-    };
-    artworks.style.overflowX="hidden"
+    }
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      scrollArtworks_right();
-      scrollArtworks_left();
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     scrollArtworks_right();
+  //     scrollArtworks_left();
+  //   };
 
-    window.addEventListener('resize', handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
-  return(
+  return (
     <div id="side">
-      <div id="right" onClick={scrollArtworks_right}>Next</div>
-      <div id="left"  onClick={scrollArtworks_left}>Prev.</div>
+      <div id="right" onClick={scrollArtworks_right}>
+        Next
+      </div>
+      <div id="left" onClick={scrollArtworks_left}>
+        Prev.
+      </div>
     </div>
-  )
+  );
 }
