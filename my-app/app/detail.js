@@ -11,7 +11,7 @@ export default function Detail({artwork, onClose}) {
   console.log(artwork.material);
   return (
     <div
-    style={{width:'100vw', display:"flex", justifyContent:'center', position:'fixed', top:"0",height:'100vh', zIndex:'101', backgroundColor:'white'}}>
+    style={{width:'100vw', display:"flex", justifyContent:'center', position:'fixed', top:"0",right:"0",left:"revert-layer",height:'100vh', zIndex:'101', backgroundColor:'white'}}>
           <div className='title_con' style={{display:"flex",height:"100vh", width:"-webkit-fill-available", justifyContent:"center", alignItems:'center',padding:"0.5rem"}}>
             <div id="title" style={{display:"flex",   width: "100%", flexWrap:'wrap', justifyContent:'center'}}>
                         <i>{artwork.title},&nbsp;</i>

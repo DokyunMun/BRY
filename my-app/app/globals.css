@@ -4,30 +4,76 @@ body {
     display: flex;
     width: 100vw;
     /* overflow-x: scroll; */
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     user-select: none;
+}
+#years-con{
+    top:2rem;
+}
+
+#closebtn{
+    position: absolute;
+    top: 0;
+    right: 0rem;
+}
+
+.blur-mob{
+    backdrop-filter: blur(10px);
 }
 
 /* Menu */
 .btn,
+.yearbtn,
 #copyright {
     z-index: 2;
 }
-.btn {
+.btn,
+.yearbtn {
     display: flex;
     align-items: center;
     padding: 0.5rem;
     width: fit-content;
     color: black;
     text-decoration: none;
+    cursor: pointer;
+    border-radius: 0rem;
+    min-height: 1rem;
     /* background-color: rgb(1, 92, 92); */
 }
+#about_close_btn {
+    height: min-content;
+}
 .btn:hover,
+.yearbtn:hover,
 #about_close_btn:hover {
-    color: lightgray;
+    background-color: rgba(150, 150, 150, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+
+    /* color: lightgray; */
+}
+#years-con {
+    right: 0;
+}
+#yeartitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+}
+
+.yearbtn {
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rgb(255, 255, 255, 0.5); */
+    backdrop-filter: blur(10px);
+    color: rgb(0, 0, 0);
 }
 #byeoriyang_btn {
-    z-index: 100;
+    z-index: 12;
     position: fixed;
     align-items: center;
     top: 0;
@@ -39,7 +85,7 @@ body {
 }
 #email_btn {
     position: absolute;
-    top:-2rem;
+    top: -2rem;
     left: 0;
     display: none;
 }
@@ -61,15 +107,15 @@ body {
     width: 100vw;
     display: flex;
     justify-content: space-between;
-    background: rgb(255, 255, 255);
+    /* background: rgb(255, 255, 255);
     background: linear-gradient(
         0deg,
         rgba(255, 255, 255, 1) 0%,
         rgba(255, 255, 255, 0) 20%
-    );
+    ); */
     position: fixed;
     bottom: 0rem;
-    z-index: 100;
+    z-index: 10;
 }
 
 /* Artworks */
@@ -82,6 +128,7 @@ body {
     overflow-x: none;
     left: 0;
     transition: left 0.5s;
+    z-index: 1;
 }
 
 #artworks::-webkit-scrollbar {
@@ -96,16 +143,25 @@ body {
     top: 0;
 }
 
+#main-body{
+    transition: left 0.5s;
+
+}
+
 .title {
     font-family: sans-serif;
+    position: relative;
+    z-index: 0;
     /* font-size: 0.9rem; */
     display: flex;
     align-items: center;
-    padding: 0.5rem;
-    color: rgb(255, 255, 255);
+    padding-left: 0.5rem;
+    visibility: hidden;
     text-decoration: none;
     width: calc(25rem - 0.8rem);
+    display: flex;
     flex-wrap: wrap;
+    height: 2rem;
 }
 
 /* #firstslide, #lastslide{
@@ -116,7 +172,7 @@ body {
     position: absolute;
     min-width: 25rem;
     max-width: 25rem;
-    height: calc(100vh - 5rem);
+    height: calc(100vh - 4rem);
     background-color: rgb(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     z-index: 10;
@@ -143,7 +199,6 @@ body {
 /* Side */
 #left,
 #right {
-    display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
@@ -151,27 +206,26 @@ body {
     top: 4rem;
     color: white;
     cursor: pointer;
-}
-#left {
-    position: fixed;
-    /* border-right: solid black 1px; */
-}
-#right {
-    width: cacl(100vw - 75rem);
-    position: fixed;
-    right: 0rem;
+    position: absolute;
+    z-index: 8;
 }
 
+#right {
+    display: flex;
+    width: cacl(100vw - 75rem);
+    right: 0rem;
+}
+#left {
+    display: none;
+}
 /* About */
 #about_con {
     position: fixed;
     top: 4rem;
     display: none;
     justify-content: space-between;
-    width: calc(25rem - 0.8rem);
+    width: 25rem;
     height: calc(100vw - 6.5rem);
-    padding: 0.4rem;
-    padding-top: 0.3rem;
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     line-height: 1.05rem;
@@ -179,6 +233,8 @@ body {
 }
 #about {
     width: 20rem;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 #artworks-mob {
@@ -225,21 +281,21 @@ body {
         display: none;
     }
     .btn {
-        padding: 0.8rem 1.5rem;
         cursor: pointer;
     }
+
     #email_btn {
-        padding: 0.5rem 1.5rem;
+        margin: 0rem 0rem;
     }
     #about_btn {
         position: fixed;
         top: 0rem;
-        right: 0;
+        right: 1.5rem;
     }
     #index_btn {
         position: fixed;
         top: 0;
-        right: 3.2rem;
+        right: 4.75rem;
         cursor: pointer;
     }
     #copyright {
@@ -247,5 +303,33 @@ body {
     }
     .images-mob {
         cursor: pointer;
+    }
+    #years-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #byeoriyang_btn{
+        left: 1.5rem;
+        z-index: 13;
+    }
+    #years-con{
+        top: 4rem;
+        right: 1.5rem;
+    }
+    #closebtn{
+        position: absolute;
+        top: 0;
+        right: 1.5rem;
+    }
+    #about {
+        width: 20rem;
+        margin-top: 0rem;
+        margin-left: 0rem;
+    }
+    #about_close_btn{
+        position: fixed;
+        top: -6rem;
+        right: -0rem;
     }
 }

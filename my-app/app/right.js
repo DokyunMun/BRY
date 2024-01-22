@@ -1,59 +1,92 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-let currentSlide = 0;
-let addSlide = 0;
+window.currentSlide = 1;
+// let addSlide = 0;
 
 export default function Right() {
-  const scrollArtworks_right = () => {
-    const artworks = document.getElementById("artworks");
-    const slides = Array.from(document.querySelectorAll(".slide"));
-    currentSlide += 1;
+  const [showRight, setShowRight] = useState(false);
+  const [slides, setSlides] = useState([]);
+ 
 
-    if (currentSlide < slides.length - 4) {
-      artworks.style.left = `${currentSlide * -25}rem`;
-    } else {
-      const firstSlide = slides[addSlide].cloneNode(true);
-      addSlide += 1;
-      artworks.appendChild(firstSlide);
-      artworks.style.left = `${currentSlide * -25}rem`;
-    }
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      setSlides(slides);
+      console.log(slides);
+      console.log(slides.length);
+      if (slides.length > 4) {
+        setShowRight(true);
+      } else {
+        setShowRight(false);
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+
+  const scrollArtworks_right = () => {
+    const left = document.getElementById("left");
+    const right = document.getElementById("right");
+    const artworks = document.getElementById("artworks");
+    const slides = Array.from(document.querySelectorAll(".slide")); 
+   
+      if (currentSlide == slides.length) {
+        right.style.display = 'none';
+      } 
+      if (currentSlide == slides.length - 1) {
+        right.style.display = 'none';
+        artworks.style.left = `${currentSlide * -25}rem`;
+        left.style.display = 'flex'
+        currentSlide += 1;
+        console.log(currentSlide)
+      }
+      else {
+        artworks.style.left = `${currentSlide * -25}rem`;
+        left.style.display = 'flex'
+        currentSlide += 1;
+        console.log(currentSlide)
+
+        // const firstSlide = slides[addSlide].cloneNode(true);
+        // addSlide += 1;
+        // artworks.appendChild(firstSlide);
+        // artworks.style.left = `${currentSlide * -25}rem`;
+      }
+    
+
   };
 
   const scrollArtworks_left = () => {
     const artworks = document.getElementById("artworks");
     const slides = Array.from(document.querySelectorAll(".slide"));
+    const right = document.getElementById("right");
+    const left = document.getElementById("left");
 
-    if (currentSlide > 1) {
-      currentSlide -= 1;
-      const style = getComputedStyle(artworks);
-      const currentLeft = parseFloat(style.left);
-      console.log(currentLeft);
-      artworks.style.left = `${currentLeft + 25 * 16}px`;
-    } else {
-      currentSlide = 0;
-    }
+
+      if (currentSlide > 1) {
+        currentSlide -= 1;
+        artworks.style.left = `${(currentSlide-1) * -25}rem`;
+
+        console.log(currentSlide)
+        right.style.display = 'flex';
+      } if(currentSlide == 1) {
+        artworks.style.left = 0;
+        left.style.display = 'none';
+      }
   };
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     scrollArtworks_right();
-  //     scrollArtworks_left();
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
 
   return (
     <div id="side">
-      <div id="right" onClick={scrollArtworks_right}>
-        Next
-      </div>
-      <div id="left" onClick={scrollArtworks_left}>
+      {showRight && (
+        <div id="right" className="btn" onClick={scrollArtworks_right}>
+          Next
+        </div>
+      )}
+      <div id="left" className="btn" onClick={scrollArtworks_left}>
         Prev.
       </div>
     </div>

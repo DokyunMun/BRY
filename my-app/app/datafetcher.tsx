@@ -7,6 +7,6 @@ export default async function DataFetcher(year) {
   const { data: artworks } = await supabase
     .from("artwork2")
     .select()
-    .eq("year", year);
+    .eq("year", 2023);
   return artworks;
 }

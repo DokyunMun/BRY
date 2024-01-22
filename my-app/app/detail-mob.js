@@ -3,46 +3,77 @@ import { useEffect } from "react";
 import Image from "next/image";
 
 export default function Detail({
-  artwork: { artwork, artworkwhole, order },
+  artwork: { artwork, artworkwhole, order, index },
   onClose,
 }) {
-  order = order - 1;
-  console.log(artworkwhole[order]);
-  console.log(order);
-
   const goBack = () => {
     onClose();
   };
-  useEffect(() => {
-    const blurs = document.querySelectorAll(".blur-mob");
-    const mainblur = document.getElementById(`${artwork.order}blur`);
-    const maintitle = mainblur.parentElement.querySelector(".title-mob");
-    mainblur.style.display = "none";
-    maintitle.style.color = "black";
 
-    blurs.forEach((blur) => {
-      blur.addEventListener("mouseover", () => {
-        blurs.forEach((blur) => {
-          blur.style.transition = "all 0.5s";
-          blur.style.opacity = "1";
-          blur.style.visibility = "visible";
-          blur.parentElement.querySelector(".title-mob").style.color = "black";
-        });
-        blur.parentElement.querySelector(".blur-mob").style.opacity = "0";
-        blur.parentElement.querySelector(".blur-mob").style.visibility =
-          "hidden";
+
+  useEffect(() => {
+    const title = document.querySelectorAll('.title-mob');
+    title.forEach((title, i) => {
+    if (i != index) {
+      title.style.filter = "blur(3px)";
+      title.style.opacity = "0";
+      title.style.transition = "all 0.5s"
+    } else {
+      title.style.filter = "none";
+      title.style.opacity = "1";
+      title.style.transition = "all 0.5s"
+    }
+  });
+},[]);
+
+  
+  const blurright = () => {
+    const mainBody = document.getElementById('main-body');
+    const title = document.querySelectorAll('.title-mob');
+
+    if (index != 0){    
+      index = index - 1
+      if (mainBody) mainBody.style.left = `calc((-100vw + 3rem) * ${index} + 1.5rem)`;
+      title.forEach((title, i) => {
+        if (i != index) {
+          title.style.filter = "blur(3px)";
+          title.style.opacity = "0";
+          title.style.transition = "all 0.5s"
+        } else {
+          title.style.filter = "none";
+          title.style.opacity = "1";
+          title.style.transition = "all 0.5s"
+        }
       });
-      blur.addEventListener("mouseout", () => {
-        blurs.forEach((blur) => {
-          blur.style.opacity = "1";
-          blur.style.visibility = "visible";
-          blur.style.transition = "all 0s";
-        });
+      
+    }
+  }
+  const blurleft = () => {
+    console.log("????")
+    console.log(index);
+    console.log(artworkwhole.length);
+    const mainBody = document.getElementById('main-body');
+    const title = document.querySelectorAll('.title-mob');
+    if (index != artworkwhole.length - 1) {
+      index = index + 1
+      if (mainBody) mainBody.style.left = `calc((-100vw + 3rem) * ${index} + 1.5rem)`;
+      title.forEach((title, i) => {
+        if (i != index) {
+          title.style.filter = "blur(3px)";
+          title.style.opacity = "0";
+          title.style.transition = "all 0.5s"
+        } else {
+          title.style.filter = "none";
+          title.style.opacity = "1";
+          title.style.transition = "all 0.5s"
+        }
       });
-    });
-  }, []);
+    }
+  }
+
   return (
     <div
+    id="toggle"
       style={{
         width: "100vw",
         display: "flex",
@@ -50,18 +81,19 @@ export default function Detail({
         top: "0",
         position: "fixed",
         height: "100svh",
-        zIndex: "10",
+        zIndex: "12",
         backgroundColor: "white",
+        // overflowY: "scroll",
       }}
     >
       {/* 닫기버튼 */}
       <div
+        id="closebtn"
         className="btn"
         onClick={goBack}
         style={{
           position: "fixed",
           top: "0",
-          right: "0",
         }}
       >
         {" "}
@@ -73,14 +105,16 @@ export default function Detail({
         id="main-body"
         style={{
           height: "calc(100svh - 3rem)",
-          position: "fixed",
+          position: "absolute",
           top: "3.5rem",
           display: "flex",
           flexDirection: "row",
           alignItems: "flex-start",
-          left: `calc((-100vw + 3rem) * ${order} + 1.5rem)`,
+          left: `calc((-100vw + 3rem) * ${index} + 1.5rem)`,
         }}
       >
+        <div id='blur-right' onClick={blurright} className="blur-mob" style={{backgroundColor:"rgba(255, 255, 255, 0.5)", position:"fixed",zIndex:"40", width:"1.5rem", height:"calc(100svh - 6rem)", top:"6rem", left:"0", cursor:"pointer"}}></div>
+        <div id='blur-left' onClick={blurleft} className="blur-mob" style={{backgroundColor:"rgba(255, 255, 255, 0.5)", position:"fixed",zIndex:"40", width:"1.5rem", height:"calc(100svh - 6rem)", top:"6rem", right:"0", cursor:"pointer"}}></div>
         {artworkwhole?.map((artwork) => (
           <div
             className="slide-mob"
@@ -99,10 +133,12 @@ export default function Detail({
                 height: "2rem",
                 display: "flex",
                 flexDirection: "column",
-                color: "rgba(0, 0, 0, 0.2)",
+                color: "black",
                 flexWrap: "nowrap",
                 alingItems: "flex-start",
                 marginBottom: "0.5rem",
+                paddingLeft:"0.5rem",
+                lineHeight:"1.1rem"
               }}
             >
               <i>{artwork.title},&nbsp;</i>
@@ -113,19 +149,7 @@ export default function Detail({
               </div>
             </div>
             {/* 블러 + 이미지 */}
-            <div
-              id={`${artwork.order}blur`}
-              className="blur-mob"
-              style={{
-                position: "absolute",
-                top: "2.5rem",
-                width: "calc(100vw - 3rem)",
-                height: "100%",
-                zIndex: "10",
-                backgroundColor: "rgb(255, 255, 255, 0.6)",
-                backdropFilter: "blur(10px)",
-              }}
-            ></div>
+
             <Image
               style={{ marginBottom: "1rem" }}
               className="images-mob-detail"
@@ -134,7 +158,7 @@ export default function Detail({
               quality={100}
               layout="responsive"
               src={`/${artwork.id}.jpg`}
-              alt={`${artwork.id}`}
+              alt={`${artwork.id}`}              
             />
           </div>
         ))}{" "}
