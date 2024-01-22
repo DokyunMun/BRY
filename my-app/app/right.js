@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 
-window.currentSlide = 1;
+if (typeof window !== 'undefined') {
+  window.currentSlide = 1;
+}
 // let addSlide = 0;
 
 export default function Right() {

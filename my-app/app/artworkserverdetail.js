@@ -1,5 +1,5 @@
 // my-app/app/ArtworksServer.tsx
-import DataFetcher from "./datafetcher";
+import DataFetcher from "../past/datafetcher";
 import Detail from "@/pages/detail/[id]";
 
 export default async function ArtworksServer() {
