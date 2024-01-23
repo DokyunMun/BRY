@@ -69,7 +69,7 @@ console.log(selectedYear)
   return (
     <div>
       <Artworks artworks={artworks}></Artworks>
-      <div id="years-con" style={{display: "flex", flexDirection: "column", position:"absolute"}}>
+      <div id="years-con" style={{display: "flex", flexDirection: "column", position:"absolute", zIndex:'10'}}>
         <div onClick={showyearsmenu} className='btn'id="yeartitle" style={{minHeight:"1rem", display:"flex"}}>{selectedYear}&nbsp;
         <svg width="5" height="5" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2.5 4L5 -1.79422e-07L3.49691e-07 -6.16536e-07L2.5 4Z" fill="black"/>
