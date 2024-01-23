@@ -1,15 +1,39 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Detail from "./detail";
 
-export default function Detail({
+export default function Detailmob({
   artwork: { artwork, artworkwhole, order, index },
   onClose,
 }) {
+
+
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentArtwork, setCurrentArtwork] = useState(null);
+
   const goBack = () => {
     onClose();
   };
 
+  const openModal = (artwork, index) => {
+    const order = artwork.order;
+    const artworkwhole = artworks;
+
+
+    setCurrentArtwork({
+      artwork,
+      order,
+      artworkwhole,
+      index
+    });
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const title = document.querySelectorAll('.title-mob');
@@ -72,19 +96,9 @@ export default function Detail({
   }
 
   return (
+    <div>
     <div
     id="toggle"
-      style={{
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column",
-        top: "0",
-        position: "fixed",
-        height: "100svh",
-        zIndex: "12",
-        backgroundColor: "white",
-        // overflowY: "scroll",
-      }}
     >
       {/* 닫기버튼 */}
       <div
@@ -151,19 +165,23 @@ export default function Detail({
             {/* 블러 + 이미지 */}
 
             <Image
-              style={{ marginBottom: "1rem" }}
+              style={{ marginBottom: "1rem", cursor:"pointer" }}
               className="images-mob-detail"
               width={100}
               height={100}
               quality={100}
               layout="responsive"
               src={`/${artwork.id}.jpg`}
-              alt={`${artwork.id}`}              
+              alt={`${artwork.id}`}    
+              onClick={() => openModal(artwork, index)}
             />
           </div>
         ))}{" "}
         {/* 이전 영역 */}
       </div>
+    </div>
+    {isModalOpen && <Detail artwork={currentArtwork} onClose={closeModal} />}
+
     </div>
   );
 }

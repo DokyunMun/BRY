@@ -2,11 +2,27 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Detail from "./detail-mob";
+import Detailmob from "./detail-mob";
+import Detail from "./detail";
 
 export default function Artworks({ artworks }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen_mob, setIsModalOpen_mob] = useState(false);
   const [currentArtwork, setCurrentArtwork] = useState(null);
+
+  const openModal_mob = (artwork, index) => {
+    const order = artwork.order;
+    const artworkwhole = artworks;
+
+
+    setCurrentArtwork({
+      artwork,
+      order,
+      artworkwhole,
+      index
+    });
+    setIsModalOpen_mob(true);
+  };
 
   const openModal = (artwork, index) => {
     const order = artwork.order;
@@ -23,6 +39,7 @@ export default function Artworks({ artworks }) {
   };
 
   const closeModal = () => {
+    setIsModalOpen_mob(false);
     setIsModalOpen(false);
   };
 
@@ -128,7 +145,7 @@ export default function Artworks({ artworks }) {
                     width={0}
                     height={0}
                     layout="responsive"
-                    onClick={() => openModal(artwork, index)}
+                    onClick={() => openModal_mob(artwork, index)}
                   />
                 </div>
               ),
@@ -155,7 +172,7 @@ export default function Artworks({ artworks }) {
                     width={0}
                     height={0}
                     layout="responsive"
-                    onClick={() => openModal(artwork, index)}
+                    onClick={() => openModal_mob(artwork, index)}
                   />
                 </div>
               ),
@@ -173,6 +190,7 @@ export default function Artworks({ artworks }) {
         ></div>
       </div>
       {isModalOpen && <Detail artwork={currentArtwork} onClose={closeModal} />}
+      {isModalOpen_mob && <Detailmob artwork={currentArtwork} onClose={closeModal} />}
     </div>
   );
 }
