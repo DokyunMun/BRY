@@ -36,6 +36,6 @@
     "past/artworkserver.js",
     "app/artworks.js",
     "app/about.js"
-  ],
+, "pages/api/yearfetcher.js", "pages/api/datafetcher.js"  ],
   "exclude": ["node_modules"]
 }

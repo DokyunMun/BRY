@@ -103,10 +103,17 @@ export default function Artworks({ artworks }) {
   return (
     <div>
       <div id="artworks">
-        {artworks?.map((artwork, index) => (
+        {artworks?.map((artwork, index) => {
+        const regex = /[가-힣]/g; 
+        const titleElement = artwork.title.match(regex) ? (
+          <div>{artwork.title},&nbsp;</div>
+        ) : (
+          <i>{artwork.title},&nbsp; </i>
+        );
+        return(
           <div className="slide" id={artwork.filename}>
             <div className="title">
-              <i>{artwork.title},&nbsp;</i>
+            {titleElement}
               <div>{artwork.material},&nbsp; </div>
               <div>
                 {artwork.width} × {artwork.height} cm,&nbsp;{" "}
@@ -125,7 +132,7 @@ export default function Artworks({ artworks }) {
               onClick={() => openModal(artwork, index)}
             />
           </div>
-        ))}
+        )})}
       </div>
       <div id="artworks-mob">
         <div id="A-side-mob" style={{ width: "calc( 49.5vw - 1.5rem )" }}>

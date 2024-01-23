@@ -129,7 +129,14 @@ export default function Detailmob({
       >
         <div id='blur-right' onClick={blurright} className="blur-mob" style={{backgroundColor:"rgba(255, 255, 255, 0.5)", position:"fixed",zIndex:"40", width:"1.5rem", height:"calc(100svh - 6rem)", top:"6rem", left:"0", cursor:"pointer"}}></div>
         <div id='blur-left' onClick={blurleft} className="blur-mob" style={{backgroundColor:"rgba(255, 255, 255, 0.5)", position:"fixed",zIndex:"40", width:"1.5rem", height:"calc(100svh - 6rem)", top:"6rem", right:"0", cursor:"pointer"}}></div>
-        {artworkwhole?.map((artwork) => (
+        {artworkwhole?.map((artwork) => {
+          const regex = /[가-힣]/g; 
+          const titleElement = artwork.title.match(regex) ? (
+            <div>{artwork.title},&nbsp;</div>
+          ) : (
+            <i>{artwork.title},&nbsp; </i>
+          );
+          return(
           <div
             className="slide-mob"
             style={{
@@ -155,7 +162,7 @@ export default function Detailmob({
                 lineHeight:"1.1rem"
               }}
             >
-              <i>{artwork.title},&nbsp;</i>
+              {titleElement}
               <div>
                 {artwork.material},&nbsp;
                 {artwork.width} × {artwork.height} cm,&nbsp;
@@ -176,7 +183,7 @@ export default function Detailmob({
               onClick={() => openModal(artwork, index)}
             />
           </div>
-        ))}{" "}
+        )})}{" "}
         {/* 이전 영역 */}
       </div>
     </div>

@@ -341,8 +341,9 @@ display: none;
     }
     #about_close_btn{
         position: fixed;
-        top: -6rem;
-        right: -0rem;
+        z-index: 20;
+        top: 0rem;
+        right: 1.5rem;
     }
 
     .toggle-body{
