@@ -3,10 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Artworks from './artworks';
 
+
 export default function Yearbtn() {
   const [selectedYear, setSelectedYear] = useState([2023]);
   const [artworks, setArtworks] = useState([]);
   const [years, setYears] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const showyearsmenu = () => {
   const yearmenus= document.querySelectorAll(".yearbtn")
@@ -25,13 +28,23 @@ export default function Yearbtn() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/yearfetcher`);
-      const newYears = await res.json();
-      setYears(newYears);
+      setIsLoading(true);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/yearfetcher`);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const newYears = await res.json();
+        setYears(newYears);
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+      setIsLoading(false);
     };
 
     fetchData();
   }, []);
+  
 
   useEffect(() => {
     const fetchData = async () => {
