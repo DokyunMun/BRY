@@ -4,8 +4,10 @@ export default async function handler(req, res) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    let year = 2023
-    year = req.query.year; // URL query parameter에서 'year'를 가져옵니다.
+    let year = "2023"
+    if (req.query.year) {
+        year = req.query.year; // URL query parameter에서 'year'를 가져옵니다.
+    }
     const { data: artworks } = await supabase
     .from("artwork2")
     .select()
