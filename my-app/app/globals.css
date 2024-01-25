@@ -45,18 +45,15 @@ body {
 }
 .btn:hover,
 .yearbtn:hover,
+#yeartitle:hover,
 #about_close_btn:hover {
     background-color: rgba(150, 150, 150, 0.5);
     backdrop-filter: blur(10px);
     border-radius: 0.5rem;
     transition: all 0.2s;
-
-    /* color: lightgray; */
 }
 
-.yearbtn:hover{
-    color: lightgrey;
-}
+
 
 #years-con {
     right: 0;
@@ -131,7 +128,7 @@ body {
     position: fixed;
     top: 2rem;
     width: max-content;
-    height: calc(100vh - 2rem);
+    height: calc(100svh - 2rem);
     overflow-x: none;
     left: 0;
     transition: left 0.5s;
@@ -172,15 +169,12 @@ body {
     height: 2rem;
 }
 
-/* #firstslide, #lastslide{
- min-width: 11vw;
-} */
 
 .blur {
     position: absolute;
     min-width: 25rem;
     max-width: 25rem;
-    height: calc(100vh - 4rem);
+    height: calc(100svh - 4rem);
     background-color: rgb(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     z-index: 10;
@@ -191,12 +185,6 @@ body {
         visibility 0.2s ease;
 }
 
-/* .blur:hover {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 0 !important;
-} */
 .images {
     cursor: pointer;
 }
@@ -320,7 +308,7 @@ body {
         display: none;
         justify-content: space-between;
         width: calc(100vw - 3.6rem);
-        height: calc(100vh - 6rem);
+        height: calc(100svh - 6rem);
         padding: 1rem;
         padding-top: 0.8rem;
         background-color: rgba(255, 255, 255, 0.5);
@@ -388,6 +376,8 @@ body {
         justify-content: center;
         align-items: center;
         padding: 0.5rem 0.8rem;
+        background-color: white;
+        filter: blur(0);
     }
     
     #years-menu {
@@ -397,14 +387,11 @@ body {
     }
     .yearbtn{
         background-color: rgb(255, 255, 255);
-        display: none;
         justify-content: center;
         align-items: center;
         padding: 0.5rem 0.8rem;
     }
 
-
-    /* color: lightgray; */
 
 
     #email_btn {

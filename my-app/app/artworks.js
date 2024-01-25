@@ -134,42 +134,33 @@ export default function Artworks({ artworks }) {
         })}
       </div>
       <div id="artworks-mob">
-        <div id="A-side-mob" style={{ width: "calc( 49.5vw - 0.8rem )" }}>
+        <div id="A-side-mob" style={{ width: "calc( 49.5vw - 0.8rem )", display:"flex", flexDirection:"column" }}>
           {artworks?.map(
             (artwork, index) =>
               index % 2 === 0 && (
-                <div
-                  className="slide-A-mob"
-                  style={{ paddingBottom: "0.5vw" }}
-                  id={artwork.filename}
-                >
                   <Image
                     id={artwork.order}
                     className="images-mob"
                     src={`/${artwork.id}.jpg`}
                     alt={artwork.title}
+                    style={{display:"block", marginBottom:"1vw"}}
                     width={0}
                     height={0}
                     layout="responsive"
                     onClick={() => openModal_mob(artwork, index)}
                   />
-                </div>
               ),
           )}
-          <div style={{ height: "auto", backgroundColor: "red" }}></div>
+        {/* <div style={{backgroundColor:"rgb(0,200,0,0.05)", flexGrow:1, display:"flex", justifyContent:"center", alignItems:"center"}}></div> */}
+
         </div>
         <div
           id="B-side-mob"
-          style={{ width: "calc( 49.5vw - 0.8rem )", marginLeft: "1vw" }}
+          style={{ width: "calc( 49.5vw - 0.8rem )", marginLeft: "1vw", display:"flex", flexDirection:"column" }}
         >
           {artworks?.map(
             (artwork, index) =>
               index % 2 === 1 && (
-                <div
-                  className="slide-B-mob"
-                  id={artwork.filename}
-                  style={{ paddingBottom: "0.5vw" }}
-                >
                   <Image
                     id={artwork.order}
                     className="images-mob"
@@ -178,18 +169,18 @@ export default function Artworks({ artworks }) {
                     width={0}
                     height={0}
                     layout="responsive"
+                    style={{display:"block", marginBottom:"1vw"}}
                     onClick={() => openModal_mob(artwork, index)}
                   />
-                </div>
               ),
           )}
-          <div style={{ height: "auto", backgroundColor: "red" }}></div>
+          {/* <div style={{backgroundColor:"rgb(0,200,0,0.05)", flexGrow:1, display:"flex", justifyContent:"center", alignItems:"center"}}></div> */}
         </div>
         <div
           style={{
             width: "100vw",
             position: "relative",
-            height: "1rem",
+            height: "calc(0.8rem - 1vw)",
             display: "flex",
             justifyContent: "end",
           }}

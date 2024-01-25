@@ -117,6 +117,7 @@ export default function Yearbtn() {
           {uniqueYears.map((year, index) => (
             <div
               className="yearbtn"
+              style={{display:"none"}}
               value={year}
               key={index}
               onClick={() => handleClick(year)}

@@ -207,6 +207,21 @@ export default function Detailmob({
                   alt={`${artwork.id}`}
                   onClick={() => openModal(artwork, index)}
                   priority={isPriority}
+                  onTouchStart={(e) => {
+                    this.touchStart = e.touches[0].clientX;
+                  }}
+                  onTouchMove={(e) => {
+                    this.touchEnd = e.touches[0].clientX;
+                  }}
+                  onTouchEnd={() => {
+                    if (this.touchStart - this.touchEnd > 150) {
+                      // the swipe is more than 150px to the left
+                      blurright();
+                    } else if (this.touchStart - this.touchEnd < -150) {
+                      // the swipe is more than 150px to the right
+                      blurleft();
+                    }
+                  }}
                 />
               </div>
             );
