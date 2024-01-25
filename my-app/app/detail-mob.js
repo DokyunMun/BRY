@@ -10,6 +10,9 @@ export default function Detailmob({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentArtwork, setCurrentArtwork] = useState(null);
   const [index, setIndex] = useState(initialIndex); // index를 state로 관리
+  const [touchStart, setTouchStart] = useState(0);
+const [touchEnd, setTouchEnd] = useState(0);
+
 
   const goBack = () => {
     onClose();
@@ -208,18 +211,18 @@ export default function Detailmob({
                   onClick={() => openModal(artwork, index)}
                   priority={isPriority}
                   onTouchStart={(e) => {
-                    this.touchStart = e.touches[0].clientX;
+                    setTouchStart(e.touches[0].clientX);
                   }}
                   onTouchMove={(e) => {
-                    this.touchEnd = e.touches[0].clientX;
+                    setTouchEnd(e.touches[0].clientX);
                   }}
                   onTouchEnd={() => {
-                    if (this.touchStart - this.touchEnd > 150) {
+                    if (touchStart - touchEnd > 150) {
                       // the swipe is more than 150px to the left
-                      blurright();
-                    } else if (this.touchStart - this.touchEnd < -150) {
-                      // the swipe is more than 150px to the right
                       blurleft();
+                    } else if (touchStart - touchEnd < -150) {
+                      // the swipe is more than 150px to the right
+                      blurright();
                     }
                   }}
                 />
