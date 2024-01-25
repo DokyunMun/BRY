@@ -12,10 +12,18 @@ export default function About() {
     aboutCon.style.display = "none";
     about_btn.style.display = "flex";
     email_btn.style.display = "none";
+    const about_close_btn = document.getElementById("about_close_btn");
+
+    about_close_btn.style.display = "none";
+
   };
 
   return (
+    <div>
     <div id="about_con">
+    <div className="btn" id="email_title">
+      Contact  
+      </div>
             <div className="btn" id="email_btn">
         didqufl@naver.com
       </div>
@@ -39,7 +47,8 @@ export default function About() {
         2019.9 <br></br>&#65308;흠: Focus on Complex&#65310;, <br></br>이화여자대학교 이화아트센터<br/>
         </div>
       </div>
-      <div id="about_close_btn" className="btn" onClick={aboutCloseBtn}>
+    </div>
+    <div id="about_close_btn" className="btn" onClick={aboutCloseBtn}>
         Close
       </div>
     </div>

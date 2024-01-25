@@ -14,12 +14,11 @@ export default function Artworks({ artworks }) {
     const order = artwork.order;
     const artworkwhole = artworks;
 
-
     setCurrentArtwork({
       artwork,
       order,
       artworkwhole,
-      index
+      index,
     });
     setIsModalOpen_mob(true);
   };
@@ -28,12 +27,11 @@ export default function Artworks({ artworks }) {
     const order = artwork.order;
     const artworkwhole = artworks;
 
-
     setCurrentArtwork({
       artwork,
       order,
       artworkwhole,
-      index
+      index,
     });
     setIsModalOpen(true);
   };
@@ -104,38 +102,39 @@ export default function Artworks({ artworks }) {
     <div>
       <div id="artworks">
         {artworks?.map((artwork, index) => {
-        const regex = /[가-힣]/g; 
-        const titleElement = artwork.title.match(regex) ? (
-          <div>{artwork.title},&nbsp;</div>
-        ) : (
-          <i>{artwork.title},&nbsp; </i>
-        );
-        return(
-          <div className="slide" id={artwork.filename}>
-            <div className="title">
-            {titleElement}
-              <div>{artwork.material},&nbsp; </div>
-              <div>
-                {artwork.width} × {artwork.height} cm,&nbsp;{" "}
+          const regex = /[가-힣]/g;
+          const titleElement = artwork.title.match(regex) ? (
+            <div>{artwork.title},&nbsp;</div>
+          ) : (
+            <i>{artwork.title},&nbsp; </i>
+          );
+          return (
+            <div className="slide" id={artwork.filename}>
+              <div className="title">
+                {titleElement}
+                <div>{artwork.material},&nbsp; </div>
+                <div>
+                  {artwork.width} × {artwork.height} cm,&nbsp;{" "}
+                </div>
+                <div>{artwork.year}</div>
               </div>
-              <div>{artwork.year}</div>
+              <div className="blur"></div>
+              <Image
+                id={artwork.order}
+                className="images"
+                src={`/${artwork.id}.jpg`}
+                alt={artwork.title}
+                width={0}
+                height={0}
+                layout="responsive"
+                onClick={() => openModal(artwork, index)}
+              />
             </div>
-            <div className="blur"></div>
-            <Image
-              id={artwork.order}
-              className="images"
-              src={`/${artwork.id}.jpg`}
-              alt={artwork.title}
-              width={0}
-              height={0}
-              layout="responsive"
-              onClick={() => openModal(artwork, index)}
-            />
-          </div>
-        )})}
+          );
+        })}
       </div>
       <div id="artworks-mob">
-        <div id="A-side-mob" style={{ width: "calc( 49.5vw - 1.5rem )" }}>
+        <div id="A-side-mob" style={{ width: "calc( 49.5vw - 0.8rem )" }}>
           {artworks?.map(
             (artwork, index) =>
               index % 2 === 0 && (
@@ -161,7 +160,7 @@ export default function Artworks({ artworks }) {
         </div>
         <div
           id="B-side-mob"
-          style={{ width: "calc( 49.5vw - 1.5rem )", marginLeft: "1vw" }}
+          style={{ width: "calc( 49.5vw - 0.8rem )", marginLeft: "1vw" }}
         >
           {artworks?.map(
             (artwork, index) =>
@@ -197,7 +196,9 @@ export default function Artworks({ artworks }) {
         ></div>
       </div>
       {isModalOpen && <Detail artwork={currentArtwork} onClose={closeModal} />}
-      {isModalOpen_mob && <Detailmob artwork={currentArtwork} onClose={closeModal} />}
+      {isModalOpen_mob && (
+        <Detailmob artwork={currentArtwork} onClose={closeModal} />
+      )}
     </div>
   );
 }

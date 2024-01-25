@@ -7,17 +7,14 @@ body {
     font-size: 0.85rem;
     user-select: none;
 }
-#years-con{
-    top:2rem;
-}
 
-#closebtn{
+#closebtn {
     position: absolute;
     top: 0;
     right: 0rem;
 }
 
-.blur-mob{
+.blur-mob {
     backdrop-filter: blur(10px);
 }
 
@@ -41,7 +38,10 @@ body {
     /* background-color: rgb(1, 92, 92); */
 }
 #about_close_btn {
+    display: none;
+    position: fixed;
     height: min-content;
+    right:0rem;
 }
 .btn:hover,
 .yearbtn:hover,
@@ -53,24 +53,31 @@ body {
 
     /* color: lightgray; */
 }
+
+.yearbtn:hover{
+    color: lightgrey;
+}
+
 #years-con {
     right: 0;
 }
 #yeartitle {
+    cursor: pointer;
+    height: 1rem;
     display: flex;
-    align-items: center;
     justify-content: center;
-    width: 2.5rem;
+    align-items: center;
+    padding: 0.5rem 0.8rem;
 }
 
 .yearbtn {
-    width: 2.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: rgb(255, 255, 255, 0.5); */
+    background-color: rgb(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     color: rgb(0, 0, 0);
+    width:2.5rem;
 }
 #byeoriyang_btn {
     z-index: 12;
@@ -131,6 +138,8 @@ body {
     z-index: 1;
 }
 
+
+
 #artworks::-webkit-scrollbar {
     display: none;
 }
@@ -143,9 +152,8 @@ body {
     top: 0;
 }
 
-#main-body{
+#main-body {
     transition: left 0.5s;
-
 }
 
 .title {
@@ -206,7 +214,7 @@ body {
     top: 4rem;
     color: white;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     z-index: 8;
 }
 
@@ -221,10 +229,10 @@ body {
 /* About */
 #about_con {
     position: fixed;
-    top: 4rem;
     display: none;
     justify-content: space-between;
     width: 25rem;
+    top:4rem;
     height: calc(100vw - 6.5rem);
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
@@ -232,6 +240,7 @@ body {
     z-index: 10;
 }
 #about {
+    position: fixed;
     width: 20rem;
     margin-top: 0.5rem;
     margin-left: 0.5rem;
@@ -241,25 +250,76 @@ body {
     display: none;
 }
 
-.images-toggle-landscape{
-    max-width: 70vw;
-    max-height: 100vh;
-    height: min-content;
+.images-toggle {
+    max-width: calc(100vw - 1rem);
+    max-height: calc(100svh - 1rem);
+}
+
+.images-toggle-landscape {
+    max-width: calc(100vw - 1rem);
+    max-height: calc(100svh - 1rem);
+}
+
+#toggle {
+    display: none;
+}
+
+#email_title{
+    display: none;
 }
 
 
-#toggle{
-display: none;
+#years-con {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    right: 0rem;
+    top: 2rem;
+    z-index: 10;
+    overflow: hidden;
+    width: 3.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+#yeartitle{
+    cursor: pointer;
+    height: 1rem;
+    display: flex;
+}
+
+#years-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.yearbtn{
+    display: none;
+    height: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0.8rem;
+}
+
+#svg{
+    right:0.3rem;
 }
 
 @media (max-width: 768px) {
+    #svg{
+        right:1rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+    }
     #about_con {
         position: fixed;
         top: 6rem;
-        left: 1.5rem;
+        left: 0.8rem;
         display: none;
         justify-content: space-between;
-        width: calc(100vw - 5rem);
+        width: calc(100vw - 3.6rem);
         height: calc(100vh - 6rem);
         padding: 1rem;
         padding-top: 0.8rem;
@@ -279,9 +339,9 @@ display: none;
         display: flex;
         position: fixed;
         top: 6rem;
-        left: 1.5rem;
+        left: 0.8rem;
         height: calc(100svh - 6rem);
-        width: calc(100vw - 3rem);
+        width: calc(100vw - 1.6rem);
         overflow-y: scroll;
         flex-wrap: wrap;
     }
@@ -293,16 +353,67 @@ display: none;
     }
     .btn {
         cursor: pointer;
+    }   
+    .btn:hover, #about_close_btn:hover {
+    background-color: transparent;
+    backdrop-filter: none;
+    border-radius: 0;
+    color: lightgrey;
+    transition: all 0.2s;}
+
+    .yearbtn:hover,#yeartitle:hover{
+        border-radius: 0;
+        color: lightgrey;
+        transition: all 0.2s;
     }
+    #years-con {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        overflow: hidden;
+        width: 3.5rem;
+        align-items: center;
+        justify-content: center;
+        top: 0.025rem;
+        right: 0.8rem;
+        z-index: 10;
+
+    }
+    
+    #yeartitle{
+        cursor: pointer;
+        height: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem 0.8rem;
+    }
+    
+    #years-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .yearbtn{
+        background-color: rgb(255, 255, 255);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem 0.8rem;
+    }
+
+
+    /* color: lightgray; */
+
 
     #email_btn {
         margin: 0rem 0rem;
     }
     #about_btn {
         position: fixed;
-        top: 0rem;
-        right: 1.5rem;
-    }
+        top:0;
+        right: 4rem;     }
     #index_btn {
         position: fixed;
         top: 0;
@@ -315,57 +426,46 @@ display: none;
     .images-mob {
         cursor: pointer;
     }
-    #years-menu {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    #byeoriyang_btn{
-        left: 1.5rem;
+
+
+
+
+
+
+
+
+
+    #byeoriyang_btn {
         z-index: 13;
     }
-    #years-con{
-        top: 4rem;
-        right: 1.5rem;
-        z-index: 10;
-    }
-    #closebtn{
-        position: absolute;
-        top: 0;
-        right: 1.5rem;
-    }
+
+
     #about {
         width: 20rem;
         margin-top: 0rem;
         margin-left: 0rem;
     }
-    #about_close_btn{
+    #about_close_btn {
         position: fixed;
         z-index: 20;
-        top: 0rem;
-        right: 1.5rem;
+        right: 0;
     }
 
-    .toggle-body{
+    .toggle-body {
         flex-direction: column;
         align-items: center;
     }
-    
 
-    .images-toggle{
-        max-width: 100vw;
-        max-height: 90svh;
-        width: fit-content;
-        height: fit-content;
+    .images-toggle {
+        max-width: calc(100vw - 1rem);
+        max-height: calc(100svh - 1rem);
     }
 
-    .images-toggle-landscape{
-        max-width: 100vw;
-        max-height: 100vh;
-        width: fit-content;
-        height: min-content;
+    .images-toggle-landscape {
+        max-width: calc(100vw - 1rem);
+        max-height: calc(100svh - 1rem);
     }
-    #toggle{
+    #toggle {
         width: 100vw;
         display: flex;
         flex-direction: column;
@@ -376,5 +476,14 @@ display: none;
         height: 100svh;
         z-index: 12;
         background-color: white;
+    }
+    #email_btn{
+        left:-1em
+    }
+    #email_title{
+        position: fixed;
+        display: flex;
+        top:-3.2rem;
+        left:-0.85rem
     }
 }

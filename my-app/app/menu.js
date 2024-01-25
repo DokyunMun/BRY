@@ -13,13 +13,16 @@ export default function Menu() {
     email_btn.style.display = "flex";
     // index_btn.style.display = "none";
     years_con.style.display = "none";
+    const about_close_btn = document.getElementById("about_close_btn");
+    about_close_btn.style.display = "flex";
+
   };
 
   return (
     <div>
-      <Link href={"/"} className="btn" id="byeoriyang_btn">
-        Byeori Yang
-      </Link>
+    <div className="btn" id="byeoriyang_btn" onClick={() => window.location.reload()}>
+      Byeori Yang
+    </div>
       <div className="btn" id="about_btn" onClick={toggleAbout}>
         About
       </div>
