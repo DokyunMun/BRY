@@ -217,10 +217,10 @@ const [touchEnd, setTouchEnd] = useState(0);
                     setTouchEnd(e.touches[0].clientX);
                   }}
                   onTouchEnd={() => {
-                    if (touchStart - touchEnd > 150) {
+                    if (touchStart - touchEnd > 100) {
                       // the swipe is more than 150px to the left
                       blurleft();
-                    } else if (touchStart - touchEnd < -150) {
+                    } else if (touchStart - touchEnd < -100) {
                       // the swipe is more than 150px to the right
                       blurright();
                     }
