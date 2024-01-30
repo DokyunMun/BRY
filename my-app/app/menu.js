@@ -23,21 +23,14 @@ export default function Menu() {
     <div className="btn" id="byeoriyang_btn" onClick={() => window.location.reload()}>
       Byeori Yang
     </div>
-      <div className="btn" id="about_btn" onClick={toggleAbout}>
-        About
-      </div>
-      {/* <div className="btn" id="category">
-        2023
-      </div> */}
-      <div id="footer">
-        <div id="index_con" style={{display:"flex", flexDirection:"row"}}>
-        {/* <div className="btn" id="index_btn">
-          Index
-        </div> */}
-
+        <div className="btn" id="about_btn" onClick={toggleAbout}>
+          About
+        </div>
+        <div id="footer">
+          <div id="index_con" style={{display:"flex", flexDirection:"row"}}>
         </div>
         <div id="copyright">© Byeori Yang, All rights reserved.</div>
-      </div>
+        </div>
     </div>
   );
 }

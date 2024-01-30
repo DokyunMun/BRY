@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Detailmob from "./detail-mob";
 import Detail from "./detail";
+import PublicUrl from "./publicurlfetcher";
+
 
 export default function Artworks({ artworks }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

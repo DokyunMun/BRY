@@ -8,6 +8,15 @@ body {
     user-select: none;
 }
 
+table{
+    vertical-align: top;
+    border-spacing: 0;
+}
+
+table tr td:first-child{
+    width: 2.8rem;
+}
+
 #closebtn {
     position: absolute;
     top: 0;
@@ -53,6 +62,10 @@ body {
     transition: all 0.2s;
 }
 
+.yearbtn:hover{
+    border-radius: 0;
+}
+
 
 
 #years-con {
@@ -64,8 +77,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.5rem 0.8rem;
-}
+    padding: 0.5rem ;
+    width:2.5rem;}
 
 .yearbtn {
     display: flex;
@@ -74,7 +87,7 @@ body {
     background-color: rgb(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     color: rgb(0, 0, 0);
-    width:2.5rem;
+    width: 2.5rem;
 }
 #byeoriyang_btn {
     z-index: 12;
@@ -229,7 +242,6 @@ body {
 }
 #about {
     position: fixed;
-    width: 20rem;
     margin-top: 0.5rem;
     margin-left: 0.5rem;
 }
@@ -265,7 +277,6 @@ body {
     top: 2rem;
     z-index: 10;
     overflow: hidden;
-    width: 3.5rem;
     align-items: center;
     justify-content: center;
 }
@@ -286,17 +297,26 @@ body {
     height: 1rem;
     justify-content: center;
     align-items: center;
-    padding: 0.5rem 0.8rem;
+    padding: 0.5rem;
 }
 
 #svg{
     right:0.3rem;
 }
+    path{
+        fill: rgb(0, 0, 0);
+    }
+
 
 @media (max-width: 768px) {
     #svg{
         right:1rem;
     }
+
+    path{
+        fill: rgb(0, 0, 0);
+    }
+
     
     .btn {
         padding: 0.5rem 1rem;
@@ -352,15 +372,22 @@ body {
     .yearbtn:hover,#yeartitle:hover{
         border-radius: 0;
         color: lightgrey;
+        background-color: white;
         transition: all 0.2s;
+
+
     }
+
+     #yeartitle:hover svg path{
+        fill: lightgrey;
+        transition: all 0.2s;
+     }
     #years-con {
         position: fixed;
         display: flex;
         flex-direction: column;
         z-index: 10;
         overflow: hidden;
-        width: 3.5rem;
         align-items: center;
         justify-content: center;
         top: 0.025rem;
@@ -375,7 +402,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0.5rem 0.8rem;
+        padding: 0.5rem ;
         background-color: white;
         filter: blur(0);
     }
@@ -389,7 +416,7 @@ body {
         background-color: rgb(255, 255, 255);
         justify-content: center;
         align-items: center;
-        padding: 0.5rem 0.8rem;
+        padding: 0.5rem ;
     }
 
 

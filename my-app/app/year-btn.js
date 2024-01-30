@@ -100,7 +100,7 @@ export default function Yearbtn() {
           {selectedYear}
           <svg
           id="svg"
-          style={{position:"fixed"}}
+          style={{paddingLeft:"2.5px"}}
             width="5"
             height="5"
             viewBox="0 0 5 4"
@@ -109,7 +109,6 @@ export default function Yearbtn() {
           >
             <path
               d="M2.5 4L5 -1.79422e-07L3.49691e-07 -6.16536e-07L2.5 4Z"
-              fill="black"
             />
           </svg>
         </div>
