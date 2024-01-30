@@ -28,7 +28,7 @@ export default function About() {
         didqufl@naver.com
       </a>
       <div id="about">
-        <div className="ko" style={{wordBreak:"keep-all", lineHeight:"1.2rem", marginBottom:"1.2rem"}}>
+        <div className="ko" style={{wordBreak:"keep-all", lineHeight:"1.1rem", marginBottom:"1.2rem"}}>
         수집된 경험을 재감각하는 과정에서 새롭게 감각되는<br></br>
         것들을 붙잡아 현실과 독립되는 새로운 화면을 만들어낸다.<br></br>
         기억이 증발된 채 존재하는 이미지에서 빛을 포착하고,<br></br>
@@ -46,7 +46,7 @@ export default function About() {
           </tr>
           </tbody>
         </table>
-        <div style={{lineHeight:"1.2rem", marginBottom:"0.5rem"}}>
+        <div style={{lineHeight:"1.1rem", marginBottom:"0.5rem"}}>
         단체전 <br></br>
         <table>
             <tbody>
