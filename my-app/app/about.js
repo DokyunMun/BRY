@@ -52,27 +52,27 @@ export default function About() {
             <tbody>
               <tr>
                 <td>2022.8</td>
-                <td>≪빛이 출렁거리는 곳≫, 이대서울병원 스페이스비투</td>  
+                <td>빛이 출렁거리는 곳, 이대서울병원 스페이스비투</td>  
               </tr>
               <tr>  
                 <td>2022.4</td>
-                <td>≪남는 벽 빌려드립니다≫, 상희읗</td>
+                <td>남는 벽 빌려드립니다, 상희읗</td>
               </tr>
               <tr>  
                 <td>2021.8</td>
-                <td>≪고립 혹은 탈피:섬≫, 아트스페이스 백신</td>
+                <td>고립 혹은 탈피: 섬, 아트스페이스 백신</td>
               </tr>
               <tr>  
                 <td>2021.7</td>
-                <td>≪2021 아시아프≫, 홍익대학교 현대미술관</td>
+                <td>2021 아시아프, 홍익대학교 현대미술관</td>
               </tr>
               <tr>  
                 <td>2021.5</td>
-                <td>≪접속 ACCESS≫, 이화여자대학교 파빌리온</td>
+                <td>접속 ACCESS, 이화여자대학교 파빌리온</td>
               </tr>
               <tr>  
                 <td>2019.9</td>
-                <td>≪흠: Focus on Complex≫, 이화여자대학교 이화아트센터</td>
+                <td>흠: Focus on Complex, 이화여자대학교 이화아트센터</td>
               </tr>
             </tbody>
   </table>
