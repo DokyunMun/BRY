@@ -6,6 +6,7 @@ body {
     /* overflow-x: scroll; */
     font-size: 0.85rem;
     user-select: none;
+    letter-spacing: 0.005rem;
 }
 
 table{
@@ -455,7 +456,6 @@ table tr td:first-child{
 
 
     #about {
-        width: 20rem;
         margin-top: 0rem;
         margin-left: 0rem;
     }
