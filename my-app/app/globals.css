@@ -197,6 +197,7 @@ table tr td:first-child{
     display: flex;
     flex-wrap: wrap;
     height: 2rem;
+    background-color: white;
 }
 
 

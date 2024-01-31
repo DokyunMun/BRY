@@ -13,21 +13,15 @@ export default function Yearbtn() {
     const yearmenus = document.querySelectorAll(".yearbtn");
     if (yearmenus[0].style.display === "none") {
       yearmenus.forEach((menu, index) => {
-        setTimeout(
-          () => {
-            menu.style.display = "flex";
-          },
-          10 * (index + 1),
-        ); // index에 따라 지연 시간이 증가
+        setTimeout(() => {
+          menu.style.display = "flex";
+        }, 10 * (index + 1)); // index에 따라 지연 시간이 증가
       });
     } else {
       yearmenus.forEach((menu, index) => {
-        setTimeout(
-          () => {
-            menu.style.display = "none";
-          },
-          10 * (index + 1),
-        ); // index에 따라 지연 시간이 증가
+        setTimeout(() => {
+          menu.style.display = "none";
+        }, 10 * (index + 1)); // index에 따라 지연 시간이 증가
       });
     }
   };
@@ -37,7 +31,7 @@ export default function Yearbtn() {
       setIsLoading(true);
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/yearfetcher`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/yearfetcher`
         );
         if (!res.ok) {
           throw new Error("Network response was not ok");
@@ -56,7 +50,7 @@ export default function Yearbtn() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/datafetcher?year=${selectedYear}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/datafetcher?year=${selectedYear}`
       );
       const newArtworks = await res.json();
       setArtworks(newArtworks);
@@ -90,33 +84,26 @@ export default function Yearbtn() {
   return (
     <div style={{ overflow: "hidden" }}>
       <Artworks artworks={artworks}></Artworks>
-      <div
-        id="years-con"
-      >
-        <div
-          onClick={showyearsmenu}
-          id="yeartitle"
-        >
+      <div id="years-con">
+        <div onClick={showyearsmenu} id="yeartitle">
           {selectedYear}
           <svg
-          id="svg"
-          style={{paddingLeft:"2.5px"}}
+            id="svg"
+            style={{ paddingLeft: "2.5px" }}
             width="5"
             height="5"
             viewBox="0 0 5 4"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M2.5 4L5 -1.79422e-07L3.49691e-07 -6.16536e-07L2.5 4Z"
-            />
+            <path d="M2.5 4L5 -1.79422e-07L3.49691e-07 -6.16536e-07L2.5 4Z" />
           </svg>
         </div>
         <div id="years-menu">
           {uniqueYears.map((year, index) => (
             <div
               className="yearbtn"
-              style={{display:"none"}}
+              style={{ display: "none" }}
               value={year}
               key={index}
               onClick={() => handleClick(year)}
