@@ -6,7 +6,6 @@ import Detailmob from "./detail-mob";
 import Detail from "./detail";
 import PublicUrl from "./publicurlfetcher";
 
-
 export default function Artworks({ artworks }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen_mob, setIsModalOpen_mob] = useState(false);
@@ -136,45 +135,56 @@ export default function Artworks({ artworks }) {
         })}
       </div>
       <div id="artworks-mob">
-        <div id="A-side-mob" style={{ width: "calc( 49.5vw - 0.8rem )", display:"flex", flexDirection:"column" }}>
+        <div
+          id="A-side-mob"
+          style={{
+            width: "calc( 49.5vw - 0.8rem )",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           {artworks?.map(
             (artwork, index) =>
               index % 2 === 0 && (
-                  <Image
-                    id={artwork.order}
-                    className="images-mob"
-                    src={`/${artwork.id}.jpg`}
-                    alt={artwork.title}
-                    style={{display:"block", marginBottom:"1vw"}}
-                    width={0}
-                    height={0}
-                    layout="responsive"
-                    onClick={() => openModal_mob(artwork, index)}
-                  />
-              ),
+                <Image
+                  id={artwork.order}
+                  className="images-mob"
+                  src={`/${artwork.id}.jpg`}
+                  alt={artwork.title}
+                  style={{ display: "block", marginBottom: "1vw" }}
+                  width={0}
+                  height={0}
+                  layout="responsive"
+                  onClick={() => openModal_mob(artwork, index)}
+                />
+              )
           )}
-        {/* <div style={{backgroundColor:"rgb(0,200,0,0.05)", flexGrow:1, display:"flex", justifyContent:"center", alignItems:"center"}}></div> */}
-
+          {/* <div style={{backgroundColor:"rgb(0,200,0,0.05)", flexGrow:1, display:"flex", justifyContent:"center", alignItems:"center"}}></div> */}
         </div>
         <div
           id="B-side-mob"
-          style={{ width: "calc( 49.5vw - 0.8rem )", marginLeft: "1vw", display:"flex", flexDirection:"column" }}
+          style={{
+            width: "calc( 49.5vw - 0.8rem )",
+            marginLeft: "1vw",
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
           {artworks?.map(
             (artwork, index) =>
               index % 2 === 1 && (
-                  <Image
-                    id={artwork.order}
-                    className="images-mob"
-                    src={`/${artwork.id}.jpg`}
-                    alt={artwork.title}
-                    width={0}
-                    height={0}
-                    layout="responsive"
-                    style={{display:"block", marginBottom:"1vw"}}
-                    onClick={() => openModal_mob(artwork, index)}
-                  />
-              ),
+                <Image
+                  id={artwork.order}
+                  className="images-mob"
+                  src={`/${artwork.id}.jpg`}
+                  alt={artwork.title}
+                  width={0}
+                  height={0}
+                  layout="responsive"
+                  style={{ display: "block", marginBottom: "1vw" }}
+                  onClick={() => openModal_mob(artwork, index)}
+                />
+              )
           )}
           {/* <div style={{backgroundColor:"rgb(0,200,0,0.05)", flexGrow:1, display:"flex", justifyContent:"center", alignItems:"center"}}></div> */}
         </div>
