@@ -11,8 +11,7 @@ export default function Detailmob({
   const [currentArtwork, setCurrentArtwork] = useState(null);
   const [index, setIndex] = useState(initialIndex); // index를 state로 관리
   const [touchStart, setTouchStart] = useState(0);
-const [touchEnd, setTouchEnd] = useState(0);
-
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const goBack = () => {
     onClose();
@@ -217,10 +216,10 @@ const [touchEnd, setTouchEnd] = useState(0);
                     setTouchEnd(e.touches[0].clientX);
                   }}
                   onTouchEnd={() => {
-                    if (touchStart - touchEnd > 100) {
+                    if (touchStart - touchEnd > 150) {
                       // the swipe is more than 150px to the left
                       blurleft();
-                    } else if (touchStart - touchEnd < -100) {
+                    } else if (touchStart - touchEnd < -150) {
                       // the swipe is more than 150px to the right
                       blurright();
                     }
