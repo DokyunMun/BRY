@@ -115,7 +115,7 @@ export default function Artworks({ artworks }) {
                 {titleElement}
                 <div>{artwork.material},&nbsp; </div>
                 <div>
-                  {artwork.width} × {artwork.height} cm,&nbsp;{" "}
+                 {artwork.height} × {artwork.width} cm,&nbsp;{" "}
                 </div>
                 <div>{artwork.year}</div>
               </div>
