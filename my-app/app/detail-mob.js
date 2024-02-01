@@ -192,7 +192,7 @@ export default function Detailmob({
                   {titleElement}
                   <div>
                     {artwork.material},&nbsp;
-                    {artwork.width} × {artwork.height} cm,&nbsp;
+                    {artwork.height} × {artwork.width} cm,&nbsp;
                     {artwork.year}
                   </div>
                 </div>
