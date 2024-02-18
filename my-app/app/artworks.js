@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Detailmob from "./detail-mob";
 import Detail from "./detail";
-import PublicUrl from "./publicurlfetcher";
+import UrlImageFetcher from "./urlimagefetcher";
 
 export default function Artworks({ artworks }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,62 +42,108 @@ export default function Artworks({ artworks }) {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
+  const handleImageLoad = (event) => {
+    const image = event.target;
     const blurs = document.querySelectorAll(".blur");
     const titles = document.querySelectorAll(".title");
     const about = document.getElementById("about_btn");
     const yearscon = document.getElementById("years-con");
 
-    blurs.forEach((blur) => {
-      blur.style.visibility = "hidden";
-    });
-    yearscon.style.display = "flex";
-    about.style.display = "flex";
-
-    document.querySelectorAll(".images").forEach((image) => {
-      image.addEventListener("mouseover", () => {
-        blurs.forEach((blur) => {
-          blur.style.transition = "all 0.5s";
-          blur.style.opacity = "1";
-          blur.style.visibility = "visible";
-          titles.forEach((title) => {
-            title.style.visibility = "hidden";
-          });
+    image.addEventListener("mouseover", () => {
+      blurs.forEach((blur) => {
+        blur.style.transition = "all 0.5s";
+        blur.style.opacity = "1";
+        blur.style.visibility = "visible";
+        titles.forEach((title) => {
+          title.style.visibility = "hidden";
         });
-        image.parentElement.querySelector(".blur").style.opacity = "0";
-        image.parentElement.querySelector(".blur").style.visibility = "hidden";
-        image.parentElement.querySelector(".title").style.visibility =
-          "visible";
+      });
+      image.parentElement.querySelector(".blur").style.opacity = "0";
+      image.parentElement.querySelector(".blur").style.visibility = "hidden";
+      image.parentElement.querySelector(".title").style.visibility = "visible";
+      about.style.display = "none";
+      yearscon.style.display = "none";
+    });
+
+    image.addEventListener("mouseout", () => {
+      blurs.forEach((blur) => {
+        blur.style.opacity = "0";
+        blur.style.visibility = "hidden";
+        blur.style.transition = "all 0s";
+        titles.forEach((title) => {
+          title.style.visibility = "hidden";
+        });
+      });
+      const about_container = document.getElementById("about_con");
+      if (about_container.style.display == "flex") {
         about.style.display = "none";
-        yearscon.style.display = "none";
-
-        console.log("hover");
-      });
-      image.addEventListener("mouseout", () => {
-        blurs.forEach((blur) => {
-          blur.style.opacity = "0";
-          blur.style.visibility = "hidden";
-          blur.style.transition = "all 0s";
-
-          titles.forEach((title) => {
-            title.style.visibility = "hidden";
-          });
-          const about_container = document.getElementById("about_con");
-          if (about_container.style.display == "flex") {
-            about.style.display = "none";
-          } else {
-            about.style.display = "flex";
-            yearscon.style.display = "flex";
-          }
-          const yearmenus = document.querySelectorAll(".yearbtn");
-
-          yearmenus.forEach((menu) => {
-            menu.style.display = "none";
-          });
-        });
+      } else {
+        about.style.display = "flex";
+        yearscon.style.display = "flex";
+      }
+      const yearmenus = document.querySelectorAll(".yearbtn");
+      yearmenus.forEach((menu) => {
+        menu.style.display = "none";
       });
     });
-  }, [artworks]);
+  };
+
+  // useEffect(() => {
+  //   const blurs = document.querySelectorAll(".blur");
+  //   const titles = document.querySelectorAll(".title");
+  //   const about = document.getElementById("about_btn");
+  //   const yearscon = document.getElementById("years-con");
+
+  //   blurs.forEach((blur) => {
+  //     blur.style.visibility = "hidden";
+  //   });
+  //   yearscon.style.display = "flex";
+  //   about.style.display = "flex";
+
+  //   document.querySelectorAll(".images").forEach((image) => {
+  //     image.addEventListener("mouseover", () => {
+  //       blurs.forEach((blur) => {
+  //         blur.style.transition = "all 0.5s";
+  //         blur.style.opacity = "1";
+  //         blur.style.visibility = "visible";
+  //         titles.forEach((title) => {
+  //           title.style.visibility = "hidden";
+  //         });
+  //       });
+  //       image.parentElement.querySelector(".blur").style.opacity = "0";
+  //       image.parentElement.querySelector(".blur").style.visibility = "hidden";
+  //       image.parentElement.querySelector(".title").style.visibility =
+  //         "visible";
+  //       about.style.display = "none";
+  //       yearscon.style.display = "none";
+
+  //       console.log("hover");
+  //     });
+  //     image.addEventListener("mouseout", () => {
+  //       blurs.forEach((blur) => {
+  //         blur.style.opacity = "0";
+  //         blur.style.visibility = "hidden";
+  //         blur.style.transition = "all 0s";
+
+  //         titles.forEach((title) => {
+  //           title.style.visibility = "hidden";
+  //         });
+  //         const about_container = document.getElementById("about_con");
+  //         if (about_container.style.display == "flex") {
+  //           about.style.display = "none";
+  //         } else {
+  //           about.style.display = "flex";
+  //           yearscon.style.display = "flex";
+  //         }
+  //         const yearmenus = document.querySelectorAll(".yearbtn");
+
+  //         yearmenus.forEach((menu) => {
+  //           menu.style.display = "none";
+  //         });
+  //       });
+  //     });
+  //   });
+  // }, [artworks]);
 
   return (
     <div>
@@ -120,7 +166,14 @@ export default function Artworks({ artworks }) {
                 <div>{artwork.year}</div>
               </div>
               <div className="blur"></div>
-              <Image
+              <UrlImageFetcher
+                artworkId={artwork.filename}
+                alt={artwork.title}
+                className="images"
+                onClick={() => openModal(artwork, index)}
+                onLoad={handleImageLoad} // 이미지 로드 완료 시 실행할 함수 전달
+              />
+              {/* <Image
                 id={artwork.order}
                 className="images"
                 src={`/${artwork.id}.jpg`}
@@ -129,7 +182,7 @@ export default function Artworks({ artworks }) {
                 height={0}
                 layout="responsive"
                 onClick={() => openModal(artwork, index)}
-              />
+              /> */}
             </div>
           );
         })}
@@ -146,17 +199,24 @@ export default function Artworks({ artworks }) {
           {artworks?.map(
             (artwork, index) =>
               index % 2 === 0 && (
-                <Image
-                  id={artwork.order}
-                  className="images-mob"
-                  src={`/${artwork.id}.jpg`}
+                <UrlImageFetcher
+                  artworkId={artwork.filename}
                   alt={artwork.title}
+                  className="images-mob"
                   style={{ display: "block", marginBottom: "1vw" }}
-                  width={0}
-                  height={0}
-                  layout="responsive"
                   onClick={() => openModal_mob(artwork, index)}
                 />
+                // <Image
+                //   id={artwork.order}
+                //   className="images-mob"
+                //   src={`/${artwork.id}.jpg`}
+                //   alt={artwork.title}
+                //   style={{ display: "block", marginBottom: "1vw" }}
+                //   width={0}
+                //   height={0}
+                //   layout="responsive"
+                //   onClick={() => openModal_mob(artwork, index)}
+                // />
               )
           )}
           {/* <div style={{backgroundColor:"rgb(0,200,0,0.05)", flexGrow:1, display:"flex", justifyContent:"center", alignItems:"center"}}></div> */}
@@ -173,17 +233,24 @@ export default function Artworks({ artworks }) {
           {artworks?.map(
             (artwork, index) =>
               index % 2 === 1 && (
-                <Image
-                  id={artwork.order}
-                  className="images-mob"
-                  src={`/${artwork.id}.jpg`}
+                <UrlImageFetcher
+                  artworkId={artwork.filename}
                   alt={artwork.title}
-                  width={0}
-                  height={0}
-                  layout="responsive"
+                  className="images-mob"
                   style={{ display: "block", marginBottom: "1vw" }}
                   onClick={() => openModal_mob(artwork, index)}
                 />
+                // <Image
+                //   id={artwork.order}
+                //   className="images-mob"
+                //   src={`/${artwork.id}.jpg`}
+                //   alt={artwork.title}
+                //   width={0}
+                //   height={0}
+                //   layout="responsive"
+                //   style={{ display: "block", marginBottom: "1vw" }}
+                //   onClick={() => openModal_mob(artwork, index)}
+                // />
               )
           )}
           {/* <div style={{backgroundColor:"rgb(0,200,0,0.05)", flexGrow:1, display:"flex", justifyContent:"center", alignItems:"center"}}></div> */}

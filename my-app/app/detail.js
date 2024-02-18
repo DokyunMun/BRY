@@ -1,4 +1,5 @@
 "use client";
+import UrlImageFetcherImg from "./urlimagefetcherimg"; // 상단에 추가
 
 export default function Detail({
   artwork: { artwork, artworkwhole, order, index },
@@ -37,7 +38,11 @@ export default function Detail({
           backgroundColor: "white",
         }}
       >
-        <img className="images-toggle" src={`/${artwork.id}.jpg`} alt="1" />
+        <UrlImageFetcherImg
+          artworkId={artwork.filename}
+          alt="1"
+          className="images-toggle"
+        />
       </div>
     );
   } else {
@@ -60,10 +65,10 @@ export default function Detail({
           alignItems: "center",
         }}
       >
-        <img
-          className="images-toggle-landscape"
-          src={`/${artwork.id}.jpg`}
+        <UrlImageFetcherImg
+          artworkId={artwork.filename}
           alt="1"
+          className="images-toggle-landscape"
         />
       </div>
     );

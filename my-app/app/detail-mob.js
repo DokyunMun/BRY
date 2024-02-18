@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Detail from "./detail";
+import UrlImageFetcher from "./urlimagefetcher";
 
 export default function Detailmob({
   artwork: { artwork, artworkwhole, order, index: initialIndex },
@@ -197,8 +198,27 @@ export default function Detailmob({
                   </div>
                 </div>
                 {/* 블러 + 이미지 */}
-
-                <Image
+                <UrlImageFetcher
+                  artworkId={artwork.filename}
+                  alt={`${artwork.id}`}
+                  className="images-mob-detail"
+                  style={{ marginBottom: "1rem", cursor: "pointer" }}
+                  onClick={() => openModal(artwork, index)}
+                  onTouchStart={(e) => {
+                    setTouchStart(e.touches[0].clientX);
+                  }}
+                  onTouchMove={(e) => {
+                    setTouchEnd(e.touches[0].clientX);
+                  }}
+                  onTouchEnd={() => {
+                    if (touchStart - touchEnd > 150) {
+                      blurleft();
+                    } else if (touchStart - touchEnd < -150) {
+                      blurright();
+                    }
+                  }}
+                />
+                {/* <Image
                   style={{ marginBottom: "1rem", cursor: "pointer" }}
                   className="images-mob-detail"
                   width={100}
@@ -224,7 +244,7 @@ export default function Detailmob({
                       blurright();
                     }
                   }}
-                />
+                /> */}
               </div>
             );
           })}{" "}
