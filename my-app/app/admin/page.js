@@ -5,8 +5,9 @@ import "./admin.css";
 export default function adminR() {
   return (
     <div style={{ overflow: "scroll" }}>
-      <ContentsManager></ContentsManager>
-      <Artworksadmin></Artworksadmin>
+      het
+      {/* <ContentsManager></ContentsManager>
+      <Artworksadmin></Artworksadmin> */}
     </div>
   );
 }
