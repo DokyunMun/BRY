@@ -7,7 +7,7 @@ export default function adminR() {
     <div style={{ overflow: "scroll" }}>
       het
       <ContentsManager></ContentsManager>
-      {/* <Artworksadmin></Artworksadmin> */}
+      <Artworksadmin></Artworksadmin>
     </div>
   );
 }
