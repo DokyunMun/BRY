@@ -81,7 +81,7 @@ export default function ContentsManager() {
       return;
     }
 
-    const { data, error } = await supabase.from("artwork2").insert([
+    const { data, error } = await supabase.from("artworks").insert([
       {
         title: inputValueTitle,
         material: inputValueMat,
