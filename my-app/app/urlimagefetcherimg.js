@@ -24,6 +24,8 @@ function UrlImageFetcherImg({
         .getPublicUrl(`${artworkId}`);
       if (error) {
         console.error("Error fetching image URL:", error.message);
+        console.log("artworkId");
+        console.log(artworkId);
         return;
       }
       setImageUrl(data.publicUrl);
