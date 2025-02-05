@@ -76,7 +76,7 @@ table tr td:first-child{
 #about_close_btn:hover {
     background-color: rgba(150, 150, 150, 0.5);
     backdrop-filter: blur(10px);
-    border-radius: 0rem;
+    border-radius: 0.5rem;
     transition: all 0.2s;
 }
 

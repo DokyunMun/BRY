@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-// import { cookies } from "next/headers";
+import { cookies } from "next/headers";
 
 export default async function DataFetcher() {
   const cookieStore = cookies();
