@@ -15,7 +15,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function ContentsManager() {
   const [inputValues, setInputValues] = useState({
-    id: null,
+    id: "",
     title: "",
     year: "",
     material: "",
