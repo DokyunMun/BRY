@@ -1,0 +1,19 @@
+@import url("https://use.typekit.net/unh2chh.css");
+
+
+
+body {
+    margin: 20px;
+    width: 100vw;
+    font-size: 0.8rem;
+    user-select: none;
+    letter-spacing: 0.005rem;
+    font-family: "indivisible", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+i{  font-family: "indivisible", sans-serif;
+    font-weight: 400;
+    font-style: italic;}
+
