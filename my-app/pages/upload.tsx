@@ -13,9 +13,21 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+
+type Artwork = {
+  id: number;
+  title: string;
+  year: string;
+  material: string;
+  width: string;
+  height: string;
+  filename: string;
+};
+
+
 export default function ContentsManager() {
   const [inputValues, setInputValues] = useState({
-    id: "",
+    id: null,
     title: "",
     year: "",
     material: "",
