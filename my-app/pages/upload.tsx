@@ -1,6 +1,5 @@
 "use client";
 
-// import './globals.css'
 import { createClient } from "@supabase/supabase-js";
 import React, { useState, useEffect } from "react";
 
@@ -13,7 +12,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-
 type Artwork = {
   id: number;
   title: string;
@@ -24,10 +22,9 @@ type Artwork = {
   filename: string;
 };
 
-
 export default function ContentsManager() {
-  const [inputValues, setInputValues] = useState({
-    id: null,
+  const [inputValues, setInputValues] = useState<Artwork>({
+    id: null as unknown as number,
     title: "",
     year: "",
     material: "",
@@ -35,19 +32,29 @@ export default function ContentsManager() {
     height: "",
     filename: "",
   });
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [artworks, setArtworks] = useState([]);
-  
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
+
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    fetchArtworks();
+    const fetchData = async () => {
+      await fetchArtworks();
+    };
+    fetchData();
   }, []);
-  
+
   const fetchArtworks = async () => {
     const { data, error } = await supabase.from("artworks").select("*");
-    if (error) console.error(error);
-    else setArtworks(data);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    if (data) {
+      setArtworks(data as Artwork[]);
+    }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,21 +74,19 @@ export default function ContentsManager() {
       setPreviewUrl(URL.createObjectURL(file));
     }
   };
-  
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const { id, title, material, year, width, height, filename } = inputValues;
-    
+
     if (!title || !material || !year || !width || !height) {
       alert("모든 필드를 입력하세요.");
       return;
     }
-  
-    let newFilename = filename; // Keep track of the filename before update
-    
+
+    let newFilename = filename;
+
     if (selectedFile) {
-      // If updating an existing entry with a new file, delete old file first
       if (id && filename) {
         const { error: deleteError } = await supabase.storage.from("images").remove([filename]);
         if (deleteError) {
@@ -90,27 +95,25 @@ export default function ContentsManager() {
           return;
         }
       }
-      
-      // Upload the new file
+
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("images")
         .upload(`/${selectedFile.name}`, selectedFile, { upsert: true });
-  
+
       if (uploadError) {
         console.error(uploadError);
         alert("파일 업로드 실패");
         return;
       }
-  
+
       newFilename = uploadData?.path || selectedFile.name;
     }
-  
+
     if (id) {
-      // Update existing record
       const { error } = await supabase.from("artworks").update({
         title, material, year, width, height, filename: newFilename,
       }).eq("id", id);
-  
+
       if (error) {
         console.error(error);
         alert("업데이트 실패");
@@ -118,11 +121,10 @@ export default function ContentsManager() {
         alert("업데이트 성공!");
       }
     } else {
-      // Insert new record
       const { error } = await supabase.from("artworks").insert([
         { title, material, year, width, height, filename: newFilename }
       ]);
-  
+
       if (error) {
         console.error(error);
         alert("데이터베이스 삽입 실패");
@@ -130,50 +132,35 @@ export default function ContentsManager() {
         alert("업로드 성공!");
       }
     }
-  
-    setInputValues({ id: null, title: "", year: "", material: "", width: "", height: "", filename: "" });
+
+    setInputValues({ id: null as unknown as number, title: "", year: "", material: "", width: "", height: "", filename: "" });
     setSelectedFile(null);
     setPreviewUrl(null);
     fetchArtworks();
   };
-  const handleEdit = (artwork) => {
+
+  const handleEdit = (artwork: Artwork) => {
     setInputValues(artwork);
     setPreviewUrl(`https://dsqdiqhlqtnyvbjwbrle.supabase.co/storage/v1/object/public/images/${artwork.filename}`);
   };
-  const handleDelete = async (id, filename) => {
+
+  const handleDelete = async (id: number, filename: string) => {
     if (!filename) {
       alert("파일 이름이 없습니다.");
       return;
     }
-  
-    // 🔹 파일 경로를 명확하게 확인 (버킷 내부 경로 설정)
+
     const filePath = `images/${filename}`;
     console.log(`🗑 삭제 요청: ${filePath}`);
-  
-    // 🔹 Supabase에서 파일이 실제로 존재하는지 확인
-    const { data: fileExists, error: checkError } = await supabase.storage.from("images").list();
-    if (checkError) {
-      console.error("❌ 파일 확인 실패:", checkError);
-    } else {
-      const foundFile = fileExists.find(file => file.name === filename);
-      if (!foundFile) {
-        console.warn("⚠️ 삭제할 파일이 존재하지 않습니다.");
-        return;
-      }
-    }
-  
-    // 🔹 파일 삭제 요청
+
     const { error: deleteError } = await supabase.storage.from("images").remove([filePath]);
-  
+
     if (deleteError) {
       console.error("❌ 파일 삭제 실패:", deleteError);
       alert("파일 삭제에 실패했습니다.");
       return;
     }
-  
-    console.log("✅ 파일 삭제 성공:", filePath);
-  
-    // 🔹 DB에서 데이터 삭제
+
     const { error: dbError } = await supabase.from("artworks").delete().eq("id", id);
     if (dbError) {
       console.error("❌ DB 삭제 실패:", dbError);
@@ -181,11 +168,11 @@ export default function ContentsManager() {
     } else {
       console.log("✅ DB 삭제 성공");
       alert("삭제 성공!");
-      fetchArtworks(); // UI 갱신
+      fetchArtworks();
     }
   };
 
-  const groupedArtworks = artworks.reduce((acc, art) => {
+  const groupedArtworks = artworks.reduce<Record<string, Artwork[]>>((acc, art) => {
     if (!acc[art.year]) acc[art.year] = [];
     acc[art.year].push(art);
     return acc;
@@ -204,13 +191,13 @@ export default function ContentsManager() {
         <button type="submit">{inputValues.id ? "Update" : "Submit"}</button>
       </form>
 
-      {Object.keys(groupedArtworks).sort((a, b) => b - a).map((year) => (
+      {Object.keys(groupedArtworks).sort((a, b) => b.localeCompare(a)).map((year) => (
         <div key={year}>
           <h2>{year}</h2>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {groupedArtworks[year].map((art) => (
               <div key={art.id} style={{ width: "20%" }}>
-                <img style={{width:"100px"}} src={`https://dsqdiqhlqtnyvbjwbrle.supabase.co/storage/v1/object/public/images/${art.filename}`} alt={art.title} />
+                <img style={{ width: "100px" }} src={`https://dsqdiqhlqtnyvbjwbrle.supabase.co/storage/v1/object/public/images/${art.filename}`} alt={art.title} />
                 <p><i>{art.title}</i>, {art.material}, {art.height} × {art.width} cm</p>
                 <button onClick={() => handleEdit(art)}>Edit</button>
                 <button onClick={() => handleDelete(art.id, art.filename)}>Delete</button>
