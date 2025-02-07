@@ -1,6 +1,6 @@
 "use client";
 
-import './globals.css'
+// import './globals.css'
 import { createClient } from "@supabase/supabase-js";
 import React, { useState, useEffect } from "react";
 
