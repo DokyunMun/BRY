@@ -1,7 +1,8 @@
 "use client";
 
 import { createClient } from "@supabase/supabase-js";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -23,6 +24,13 @@ type Artwork = {
 };
 
 export default function ContentsManager() {
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState("");
+  
+  const fileInputRef = useRef(null);
+
   const [inputValues, setInputValues] = useState<Artwork>({
     id: null as unknown as number,
     title: "",
@@ -38,14 +46,41 @@ export default function ContentsManager() {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchArtworks();
+    const checkUser = async () => { 
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      setUser(user);
+      setLoading(false);
     };
-    fetchData();
+
+    checkUser();
   }, []);
 
+  const handleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+    });
+  
+    if (error) console.error("로그인 실패", error);
+    else alert("로그인 링크가 이메일로 전송되었습니다!");
+  };
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+  const handleGoogleLogin = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+  
+    if (error) console.error("구글 로그인 실패", error);
+  };
+
+
   const fetchArtworks = async () => {
-    const { data, error } = await supabase.from("artworks").select("*");
+    const { data, error } = await supabase.from("artworks").select("*").order("id", {ascending:true});
 
     if (error) {
       console.error(error);
@@ -56,6 +91,17 @@ export default function ContentsManager() {
       setArtworks(data as Artwork[]);
     }
   };
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchArtworks();
+    };
+    fetchData();
+  }, []);
+
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -98,7 +144,7 @@ export default function ContentsManager() {
 
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("images")
-        .upload(`/${selectedFile.name}`, selectedFile, { upsert: true });
+        .upload(`${selectedFile.name}`, selectedFile, { upsert: true });
 
       if (uploadError) {
         console.error(uploadError);
@@ -136,6 +182,12 @@ export default function ContentsManager() {
     setInputValues({ id: null as unknown as number, title: "", year: "", material: "", width: "", height: "", filename: "" });
     setSelectedFile(null);
     setPreviewUrl(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  
+
     fetchArtworks();
   };
 
@@ -150,10 +202,10 @@ export default function ContentsManager() {
       return;
     }
 
-    const filePath = `images/${filename}`;
+    const filePath = `images//${filename}`;
     console.log(`🗑 삭제 요청: ${filePath}`);
 
-    const { error: deleteError } = await supabase.storage.from("images").remove([filePath]);
+    const { error: deleteError } = await supabase.storage.from("images").remove([filename]);
 
     if (deleteError) {
       console.error("❌ 파일 삭제 실패:", deleteError);
@@ -178,29 +230,47 @@ export default function ContentsManager() {
     return acc;
   }, {});
 
+
+  if (loading) return <div>로딩 중...</div>;
+  if (!user) {
+    return (
+      <div>
+<input
+  type="email"
+  placeholder="이메일 입력"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
+<button onClick={handleLogin}>이메일 로그인</button>
+      </div>
+    );
+  }
+  
   return (
     <div>
-      <form id="contentsManager" onSubmit={handleSubmit}>
-        <input id="title" type="text" placeholder="Title" value={inputValues.title} onChange={handleInputChange} />
-        <input id="year" type="number" placeholder="Year" value={inputValues.year} onChange={handleInputChange} />
-        <input id="material" type="text" placeholder="Material" value={inputValues.material} onChange={handleInputChange} />
-        <input id="width" type="number" placeholder="Width" value={inputValues.width} onChange={handleInputChange} />
-        <input id="height" type="number" placeholder="Height" value={inputValues.height} onChange={handleInputChange} />
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        {previewUrl && <img src={previewUrl} alt="미리보기" />}
-        <button type="submit">{inputValues.id ? "Update" : "Submit"}</button>
+          <button style={{margin: "10px 0 10px 0"}} onClick={handleLogout}>로그아웃</button>
+
+      <form id="contentsManager" onSubmit={handleSubmit} style={{paddingBottom:"12px"}}>
+        <input id="title" type="text" placeholder="Title" value={inputValues.title} onChange={handleInputChange} style={{fontStyle:"italic"}}/>
+        <span>, </span><input id="year" type="number" placeholder="Year" value={inputValues.year} onChange={handleInputChange} />
+        <span>, </span><input id="material" type="text" placeholder="Material" value={inputValues.material} onChange={handleInputChange} />
+        <span>, </span><input id="height" type="number" placeholder="Height" value={inputValues.height} onChange={handleInputChange} />
+        <span> × </span><input id="width" type="number" placeholder="Width" value={inputValues.width} onChange={handleInputChange} />
+        <br></br><br></br><input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} />
+        <br></br>{previewUrl && <img style={{width:"20%"}} src={previewUrl} alt="미리보기" />}
+        <br></br><button type="submit">{inputValues.id ? "Update" : "Upload"}</button>
       </form>
 
       {Object.keys(groupedArtworks).sort((a, b) => b.localeCompare(a)).map((year) => (
-        <div key={year}>
-          <h2>{year}</h2>
+        <div key={year} style={{borderTop: "solid", margin:"0", padding:"1.5rem 0rem 1.5rem 0"}}>
+          <div style={{margin:"10px 0px 10px 0px", fontSize: "1.5rem"}}>{year}</div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {groupedArtworks[year].map((art) => (
-              <div key={art.id} style={{ width: "20%" }}>
-                <img style={{ width: "100px" }} src={`https://dsqdiqhlqtnyvbjwbrle.supabase.co/storage/v1/object/public/images/${art.filename}`} alt={art.title} />
-                <p><i>{art.title}</i>, {art.material}, {art.height} × {art.width} cm</p>
-                <button onClick={() => handleEdit(art)}>Edit</button>
-                <button onClick={() => handleDelete(art.id, art.filename)}>Delete</button>
+              <div key={art.id} style={{ width: "20%", padding: "1rem 0 1rem 0"}}>
+                <img style={{ width: "98%" }} src={`https://dsqdiqhlqtnyvbjwbrle.supabase.co/storage/v1/object/public/images/${art.filename}`} alt={art.title} />
+                <p style={{margin: "0", fontSize: "14px"}}><i>{art.title}</i>, {art.material}, {art.height} × {art.width} cm</p>
+                <button style={{marginTop:"5px"}} onClick={() => handleEdit(art)}>Edit</button>
+                <button style={{marginTop:"5px"}} onClick={() => handleDelete(art.id, art.filename)}>Delete</button>
               </div>
             ))}
           </div>

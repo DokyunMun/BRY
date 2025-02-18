@@ -11,7 +11,8 @@ export default async function handler(req, res) {
   const { data: artworks } = await supabase
     .from("artworks")
     .select()
-    .eq("year", year);
+    .eq("year", year)
+    .order("id", { ascending : true});
 
   res.status(200).json(artworks); // 결과를 JSON 형식으로 반환합니다.
 }

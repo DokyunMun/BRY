@@ -1,10 +1,9 @@
-// app/year-btn.js
 "use client";
 import React, { useState, useEffect } from "react";
 import Artworks from "./artworks";
 
 export default function Yearbtn() {
-  const [selectedYear, setSelectedYear] = useState([2023]);
+  const [selectedYear, setSelectedYear] = useState(null);
   const [artworks, setArtworks] = useState([]);
   const [years, setYears] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,19 +14,19 @@ export default function Yearbtn() {
       yearmenus.forEach((menu, index) => {
         setTimeout(() => {
           menu.style.display = "flex";
-        }, 10 * (index + 1)); // index에 따라 지연 시간이 증가
+        }, 10 * (index + 1));
       });
     } else {
       yearmenus.forEach((menu, index) => {
         setTimeout(() => {
           menu.style.display = "none";
-        }, 10 * (index + 1)); // index에 따라 지연 시간이 증가
+        }, 10 * (index + 1));
       });
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchYears = async () => {
       setIsLoading(true);
       try {
         const res = await fetch(
@@ -38,28 +37,32 @@ export default function Yearbtn() {
         }
         const newYears = await res.json();
         setYears(newYears);
+
+        // 🔥 가장 최근 연도로 설정
+        const latestYear = Math.max(...newYears.map((y) => parseInt(y.year, 10)));
+        setSelectedYear(latestYear);
       } catch (error) {
         console.error("Fetch error:", error);
       }
       setIsLoading(false);
     };
 
-    fetchData();
+    fetchYears();
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/datafetcher?year=${selectedYear}`
-      );
-      const newArtworks = await res.json();
-      setArtworks(newArtworks);
-    };
+    if (selectedYear) {
+      const fetchData = async () => {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/datafetcher?year=${selectedYear}`
+        );
+        const newArtworks = await res.json();
+        setArtworks(newArtworks);
+      };
 
-    fetchData();
+      fetchData();
+    }
   }, [selectedYear]);
-
-  console.log(selectedYear);
 
   const uniqueYears = [...new Set(years.map((y) => y.year))];
   uniqueYears.reverse();
@@ -86,7 +89,7 @@ export default function Yearbtn() {
       <Artworks artworks={artworks}></Artworks>
       <div id="years-con">
         <div onClick={showyearsmenu} id="yeartitle">
-          {selectedYear}
+          {selectedYear || "로딩 중..."}
           <svg
             id="svg"
             style={{ paddingLeft: "2.5px" }}
