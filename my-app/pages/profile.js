@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 
 import React, { useEffect, useState, useRef } from "react";
@@ -19,9 +19,9 @@ export default function Blog() {
   const [email, setEmail] = useState("");
 
   const [quill, setQuill] = useState(null);
+  const [title, setTitle] = useState(""); // 제목 상태 추가
+  const [category, setCategory] = useState(""); // 카테고리 상태 추가
   const [content, setContent] = useState("");
-  const editorRef = useRef(null); // 🧑‍💻 에디터 ref 추가
-
 
   useEffect(() => {
     const checkUser = async () => { 
@@ -79,45 +79,65 @@ export default function Blog() {
 
   useEffect(() => {
     const loadQuill = () => {
-      if (!editorRef.current) return; // ref가 아직 연결 안 됐으면 그냥 return
       if (window.Quill && !quill) {
-        const newQuill = new Quill(editorRef.current, {
+        const newQuill = new Quill("#editor", {
           theme: "snow",
           modules: {
             toolbar: {
-              container: [["addRow"]],
+              container: [
+                // [{ header: [1, 2, false] }],
+                // ["bold", "italic", "underline"],
+                // [{ list: "ordered" }, { list: "bullet" }],
+                // ["link", "image"],
+                ["addRow"],
+              ],
               handlers: {
+                // image: function () {
+                //   const input = document.createElement("input");
+                //   input.setAttribute("type", "file");
+                //   input.setAttribute("accept", "image/*");
+                //   input.click();
+  
+                //   input.onchange = async () => {
+                //     const file = input.files[0];
+                //     if (file) {
+                //       const imageUrl = await handleImageUpload(file);
+                //       if (imageUrl) {
+                //         const range = this.quill.getSelection();
+                //         this.quill.insertEmbed(range.index, "image", imageUrl);
+                //       } else {
+                //         alert("Image upload failed!");
+                //       }
+                //     }
+                //   };
+                // },
                 addRow: function () {
                   const selection = this.quill.getSelection();
                   if (!selection) return;
-
+                
                   const [leaf, offset] = this.quill.getLeaf(selection.index);
                   if (!leaf) return;
-
-                  const node =
-                    leaf.domNode.nodeType === 3
-                      ? leaf.domNode.parentNode
-                      : leaf.domNode;
-
-                  const table = node.closest("table");
+                
+                  const node = leaf.domNode.nodeType === 3 ? leaf.domNode.parentNode : leaf.domNode;
+                
+                  const table = node.closest('table');
                   if (!table) {
-                    alert("표 안에서 커서를 둔 상태에서만 행을 추가할 수 있습니다!");
+                    alert('표 안에서 커서를 둔 상태에서만 행을 추가할 수 있습니다!');
                     return;
                   }
-
+                
                   const newRow = table.insertRow();
                   const cellCount = table.rows[0].cells.length;
                   for (let i = 0; i < cellCount; i++) {
                     const newCell = newRow.insertCell();
-                    newCell.textContent = "새 셀";
+                    newCell.textContent = '새 셀';
                   }
                 },
               },
             },
           },
         });
-        console.log("Quill 초기화됨:", newQuill); // 🔥여기!!
-        window.quill = newQuill; // 🔥 이거 추가!
+  
         setQuill(newQuill);
       }
     };
@@ -131,9 +151,7 @@ export default function Blog() {
       document.body.appendChild(quillScript);
     }
   }, []);
-  useEffect(() => {
-    console.log("quill 상태:", quill);
-  }, [quill]);
+
 
   useEffect(() => {
     if (quill && content) {
@@ -184,20 +202,20 @@ export default function Blog() {
   // };
 
 
-  if (loading) return <div>로딩 중...</div>;
-  if (!user) {
-    return (
-      <div>
-<input
-  type="email"
-  placeholder="이메일 입력"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-/>
-<button onClick={handleLogin}>이메일 로그인</button>
-      </div>
-    );
-  }
+//     if (loading) return <div>로딩 중...</div>;
+//   if (!user) {
+//     return (
+//       <div>
+// <input
+//   type="email"
+//   placeholder="이메일 입력"
+//   value={email}
+//   onChange={(e) => setEmail(e.target.value)}
+// />
+// <button onClick={handleLogin}>이메일 로그인</button>
+//       </div>
+//     );
+//   }
 
   
   return (
