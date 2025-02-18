@@ -25,7 +25,7 @@ type Artwork = {
 
 export default function ContentsManager() {
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<null>(null);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   
