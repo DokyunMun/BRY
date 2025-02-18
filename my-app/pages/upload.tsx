@@ -32,8 +32,8 @@ export default function ContentsManager() {
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   
-  const fileInputRef = useRef(null);
-
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  
   const [inputValues, setInputValues] = useState<Artwork>({
     id: null as unknown as number,
     title: "",
