@@ -116,7 +116,8 @@ export default function Blog() {
             },
           },
         });
-
+        console.log("Quill 초기화됨:", newQuill); // 🔥여기!!
+        window.quill = newQuill; // 🔥 이거 추가!
         setQuill(newQuill);
       }
     };
@@ -130,7 +131,9 @@ export default function Blog() {
       document.body.appendChild(quillScript);
     }
   }, []);
-
+  useEffect(() => {
+    console.log("quill 상태:", quill);
+  }, [quill]);
 
   useEffect(() => {
     if (quill && content) {
