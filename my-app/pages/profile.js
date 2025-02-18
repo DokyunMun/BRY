@@ -19,9 +19,9 @@ export default function Blog() {
   const [email, setEmail] = useState("");
 
   const [quill, setQuill] = useState(null);
-  const [title, setTitle] = useState(""); // 제목 상태 추가
-  const [category, setCategory] = useState(""); // 카테고리 상태 추가
   const [content, setContent] = useState("");
+  const editorRef = useRef(null); // 🧑‍💻 에디터 ref 추가
+
 
   useEffect(() => {
     const checkUser = async () => { 
@@ -79,65 +79,44 @@ export default function Blog() {
 
   useEffect(() => {
     const loadQuill = () => {
+      if (!editorRef.current) return; // ref가 아직 연결 안 됐으면 그냥 return
       if (window.Quill && !quill) {
-        const newQuill = new Quill("#editor", {
+        const newQuill = new Quill(editorRef.current, {
           theme: "snow",
           modules: {
             toolbar: {
-              container: [
-                // [{ header: [1, 2, false] }],
-                // ["bold", "italic", "underline"],
-                // [{ list: "ordered" }, { list: "bullet" }],
-                // ["link", "image"],
-                ["addRow"],
-              ],
+              container: [["addRow"]],
               handlers: {
-                // image: function () {
-                //   const input = document.createElement("input");
-                //   input.setAttribute("type", "file");
-                //   input.setAttribute("accept", "image/*");
-                //   input.click();
-  
-                //   input.onchange = async () => {
-                //     const file = input.files[0];
-                //     if (file) {
-                //       const imageUrl = await handleImageUpload(file);
-                //       if (imageUrl) {
-                //         const range = this.quill.getSelection();
-                //         this.quill.insertEmbed(range.index, "image", imageUrl);
-                //       } else {
-                //         alert("Image upload failed!");
-                //       }
-                //     }
-                //   };
-                // },
                 addRow: function () {
                   const selection = this.quill.getSelection();
                   if (!selection) return;
-                
+
                   const [leaf, offset] = this.quill.getLeaf(selection.index);
                   if (!leaf) return;
-                
-                  const node = leaf.domNode.nodeType === 3 ? leaf.domNode.parentNode : leaf.domNode;
-                
-                  const table = node.closest('table');
+
+                  const node =
+                    leaf.domNode.nodeType === 3
+                      ? leaf.domNode.parentNode
+                      : leaf.domNode;
+
+                  const table = node.closest("table");
                   if (!table) {
-                    alert('표 안에서 커서를 둔 상태에서만 행을 추가할 수 있습니다!');
+                    alert("표 안에서 커서를 둔 상태에서만 행을 추가할 수 있습니다!");
                     return;
                   }
-                
+
                   const newRow = table.insertRow();
                   const cellCount = table.rows[0].cells.length;
                   for (let i = 0; i < cellCount; i++) {
                     const newCell = newRow.insertCell();
-                    newCell.textContent = '새 셀';
+                    newCell.textContent = "새 셀";
                   }
                 },
               },
             },
           },
         });
-  
+
         setQuill(newQuill);
       }
     };
