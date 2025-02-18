@@ -3,6 +3,7 @@
 import { createClient } from "@supabase/supabase-js";
 import React, { useState, useEffect, useRef } from "react";
 
+import { User } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -25,7 +26,9 @@ type Artwork = {
 
 export default function ContentsManager() {
 
-  const [user, setUser] = useState<null>(null);
+
+  const [user, setUser] = useState<User | null>(null);
+  
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   
