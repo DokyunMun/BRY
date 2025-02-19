@@ -239,7 +239,8 @@ export default function Blog() {
     />
     <button onClick={handleLogin}>이메일 로그인</button>
   </div>
-)}
+)}           <button style={{margin: "10px 0 10px 0"}} onClick={handleLogout}>로그아웃</button>
+
       <link
         href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css"
         rel="stylesheet"
