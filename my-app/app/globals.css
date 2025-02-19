@@ -1,6 +1,8 @@
 @import url("https://use.typekit.net/unh2chh.css");
 
-
+p{
+    margin: 0;
+}
 
 body {
     margin: 0;
