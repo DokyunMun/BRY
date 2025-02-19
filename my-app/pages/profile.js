@@ -312,6 +312,7 @@ export default function Blog() {
   .ql-toolbar .ql-addRow::before {
     content: '행 추가';
     font-size: 14px;
+    display: block;
     width: 45vw;
   }
       `}</style>
