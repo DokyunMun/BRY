@@ -159,6 +159,18 @@ export default function Blog() {
     }
   }, [quill, content]);
 
+  useEffect(() => {
+    if (quill) {
+      if (user) {
+        quill.enable(true);
+        console.log("🟢 에디터 활성화됨");
+      } else {
+        quill.enable(false);
+        console.log("🔴 에디터 비활성화됨");
+      }
+    }
+  }, [user, quill]);
+  
   // 데이터를 Supabase에 저장하는 함수
   const saveToSupabase = async () => {
     const content = quill.root.innerHTML; // Quill 에디터의 내용을 가져옵니다.
@@ -202,21 +214,19 @@ export default function Blog() {
   // };
 
 
-//     if (loading) return <div>로딩 중...</div>;
-//   if (!user) {
-//     return (
-//       <div>
-// <input
-//   type="email"
-//   placeholder="이메일 입력"
-//   value={email}
-//   onChange={(e) => setEmail(e.target.value)}
-// />
-// <button onClick={handleLogin}>이메일 로그인</button>
-//       </div>
-//     );
-//   }
+  {loading && <div>로딩 중...</div>}
 
+  {!loading && !user && (
+    <div>
+      <input
+        type="email"
+        placeholder="이메일 입력"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button onClick={handleLogin}>이메일 로그인</button>
+    </div>
+  )}
   
   return (
     <div
