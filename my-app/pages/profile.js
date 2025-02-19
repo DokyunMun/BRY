@@ -309,6 +309,8 @@ export default function Blog() {
   body {
     margin: 0px;
   }
+  .ql-formats {
+  width: 45vw;}
   .ql-toolbar .ql-addRow::before {
     content: '행 추가';
     font-size: 14px;
