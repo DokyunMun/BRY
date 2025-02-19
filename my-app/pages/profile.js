@@ -120,17 +120,19 @@ export default function Blog() {
                 
                   const node = leaf.domNode.nodeType === 3 ? leaf.domNode.parentNode : leaf.domNode;
                 
-                  const table = node.closest('table');
+                  const table = node.closest("table");
                   if (!table) {
-                    alert('표 안에서 커서를 둔 상태에서만 행을 추가할 수 있습니다!');
+                    alert("표 안에서 커서를 둔 상태에서만 행을 추가할 수 있습니다!");
                     return;
                   }
                 
-                  const newRow = table.insertRow();
-                  const cellCount = table.rows[0].cells.length;
+                  // 🔥🔥 맨 위에 행 추가 🔥🔥
+                  const newRow = table.insertRow(0); // 👈 0으로 하면 맨 위에 추가돼!
+                
+                  const cellCount = table.rows[1]?.cells.length || 1; // 첫 행이 없을 수도 있으니까 안전하게 체크
                   for (let i = 0; i < cellCount; i++) {
                     const newCell = newRow.insertCell();
-                    newCell.textContent = '새 셀';
+                    newCell.textContent = "새 셀";
                   }
                 },
               },
@@ -180,7 +182,7 @@ export default function Blog() {
       .eq('id', 1);
 
     if (error) console.error("Error saving data:", error);
-    else console.log("Data saved:", data);
+    else alert("Data saved:");
   };
 
   // const handleImageUpload = async (file) => {
