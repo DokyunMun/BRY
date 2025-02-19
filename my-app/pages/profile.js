@@ -182,7 +182,7 @@ export default function Blog() {
       .eq('id', 1);
 
     if (error) console.error("Error saving data:", error);
-    else alert("Data saved:");
+    else alert("저장완료");
   };
 
   // const handleImageUpload = async (file) => {
