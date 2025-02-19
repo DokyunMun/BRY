@@ -214,19 +214,7 @@ export default function Blog() {
   // };
 
 
-  {loading && <div>로딩 중...</div>}
 
-  {!loading && !user && (
-    <div>
-      <input
-        type="email"
-        placeholder="이메일 입력"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={handleLogin}>이메일 로그인</button>
-    </div>
-  )}
   
   return (
     <div
@@ -239,6 +227,19 @@ export default function Blog() {
         justifyContent: "center",
       }}
     >
+        {loading && <div>로딩 중...</div>}
+
+{!loading && !user && (
+  <div>
+    <input
+      type="email"
+      placeholder="이메일 입력"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+    />
+    <button onClick={handleLogin}>이메일 로그인</button>
+  </div>
+)}
       <link
         href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css"
         rel="stylesheet"
