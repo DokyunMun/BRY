@@ -239,9 +239,8 @@ export default function Blog() {
     />
     <button onClick={handleLogin}>이메일 로그인</button>
   </div>
-)}           <button style={{margin: "10px 0 10px 0"}} onClick={handleLogout}>로그아웃</button>
-
-      <link
+)}
+{user && (<div><link
         href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css"
         rel="stylesheet"
       />
@@ -253,39 +252,6 @@ export default function Blog() {
           width: "45vw",
         }}
       >
-        {/* <input
-          type="text"
-          style={{
-            width: "80%",
-            height: "40px",
-            border: "lightgray solid 1px",
-            padding: "10px",
-            boxSizing: "border-box",
-          }}
-          autoFocus
-          placeholder="제목을 입력하세요"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <select
-          value={category}
-          style={{
-            width: "20%",
-            height: "40px",
-            border: "lightgray solid 1px",
-            borderLeft: "none",
-            padding: "0",
-            boxSizing: "border-box",
-            textAlign: "center",
-          }}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="">카테고리 선택</option>
-          <option value="S">Structure of artworks</option>
-          <option value="P">Piece of thought</option>
-          <option value="L">Life outside</option>
-          <option value="D">Strange Dreams</option>
-        </select> */}
       </div>
       <div
         id="editor"
@@ -303,7 +269,8 @@ export default function Blog() {
         // disabled={!title || !category || !quill?.root.innerHTML.trim()}
       >
         저장
-      </button>
+      </button></div>)}
+      
       <style jsx global>{`
   body {
     margin: 0px;
@@ -311,6 +278,7 @@ export default function Blog() {
   .ql-toolbar .ql-addRow::before {
     content: '행 추가';
     font-size: 14px;
+    width: 45vw;
   }
       `}</style>
     </div>
