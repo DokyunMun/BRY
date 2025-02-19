@@ -246,6 +246,7 @@ export default function Blog() {
         href="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css"
         rel="stylesheet"
       />
+      <div style={{display: !user ? "none" : "block"}}>
       <div
         style={{
           display: "flex",
@@ -305,6 +306,7 @@ export default function Blog() {
       >
         저장
       </button>
+      </div>
       <style jsx global>{`
   body {
     margin: 0px;
