@@ -297,6 +297,7 @@ export default function Blog() {
       <button
         style={{ width: "45vw", height: "40px" }}
         onClick={saveToSupabase}
+        disabled={!user}
         // disabled={!title || !category || !quill?.root.innerHTML.trim()}
       >
         저장
